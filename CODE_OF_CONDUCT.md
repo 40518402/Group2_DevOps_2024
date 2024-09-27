@@ -27,4 +27,4 @@ This Code of Conduct applies for the duration of our time as a group. All modes 
 
 ### Enforcement
 
-In the event of a breach of contract by any member, the group will determine the appropriate course of action. The response will be tailored to the nature of the breach, ensuring it is both necessary and proportionate.
+In the event of a breach of contract by any member, the group will determine the appropriate course of action. The response will be tailored to the nature of the breach, ensuring it is both necessary and proportionate to its severity.
