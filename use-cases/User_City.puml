@@ -1,0 +1,19 @@
+@startuml
+
+actor US1 as "User"
+
+rectangle Database
+
+rectangle "App" {
+    usecase UC2 as "Get city reports
+    based of geographical levels
+    and other prerequisites "
+
+    usecase UC3 as "Generate Report"
+
+    US1 - UC2
+    UC2 ..> UC3 : include
+    UC2 - Database
+}
+
+@enduml
