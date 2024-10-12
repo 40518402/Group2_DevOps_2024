@@ -1,0 +1,29 @@
+@startuml
+
+actor OW as "Data Analyst"
+
+rectangle "World Database"
+
+rectangle "United Nations" {
+    usecase UC1 as "Reports Generation"
+    usecase UC1.1 as "Country"
+    usecase UC1.2 as "City"
+    usecase UC1.3 as "Capital"
+    usecase UC1.4 as "Population"
+
+    usecase UCa as "Print Reports"
+
+    OW - UC1
+    UC1  ..> UC1.1 : optional
+        UC1.1 --> UCa : include
+    UC1  ..> UC1.2 : optional
+        UC1.2 --> UCa : include
+    UC1  ..> UC1.3 : optional
+        UC1.3 --> UCa : include
+    UC1  ..> UC1.4 : optional
+        UC1.4 --> UCa : include
+
+    UC1  - "World Database"
+}
+
+@enduml
