@@ -1,41 +1,41 @@
-# USE CASE: Population Report
+# USE CASE: 4 Produce Detailed Reports on Population at Various Geographical Levels
 
 ## CHARACTERISTIC INFORMATION
 
 ### Goal in Context
-As a user, I want to generate population reports, so that I can analyze population data at various geographical levels (continent, region, or country).
+As a _**Data Analyst**_, I want to generate population reports, so that I can analyze population data at various geographical levels.
 
 ### Scope
-The scope of this use case is within the organization. The system is expected to generate reports that provide population information for geographical levels (continent, region, or country) with detailed breakdowns of urban and rural populations.
+Population report generation system for _**United Nations**_.
 
 ### Level
 Primary Task.
 
 ### Preconditions
-- The database must contain accurate and up-to-date population data for all continents, regions, and countries.
+- The database contains accurate and up-to-date population data for all continents, regions, and countries.
 
 ### Success Condition
-- A detailed population report is successfully generated and available for the user to present to the organization.
+- A detailed population report is successfully generated and available for the _**data analyst**_ to present to the _**United Nations**_.
 
 ### Failed Condition
 - No report is generated due to missing or incomplete data.
 - Incorrect or inaccurate information in the report.
 
 ### Primary Actor
-User.
+Data Analyst.
 
 ### Trigger
-- The user initiates the report generation by selecting a geographical level (continent, region, or country).
+- The _**data analyst**_ initiates the report generation by selecting a geographical level (continent, region, or country).
 
 ## MAIN SUCCESS SCENARIO
 
-1. The organisation requests a population report for a specific geographical level.
-2. The user selects the geographical level (continent, region, or country) for the report.
-3. The user provides optional parameters, such as limiting the report to the top N populated countries.
+1. The _**United Nations**_ requests a population report for a specific geographical level.
+2. The _**data analyst**_ selects the geographical level (continent, region, or country) for the report.
+3. The _**data analyst**_ provides optional parameters, such as limiting the report to the top N populated countries.
 4. The system retrieves data from the database.
 5. The system calculates total population, urban population (including percentage), and rural population (including percentage).
-6. The report is generated and presented in a readable format for the user.
-7. The user provides the report to the organisation.
+6. The report is generated and presented in a readable format for the _**data analyst**_.
+7. The _**data analyst**_ provides the report to the _**United Nations**_.
 
 ## REPORT CONTENTS
 
@@ -55,14 +55,14 @@ The population report will include the following information:
 
 ## EXTENSIONS
 
-1. **Missing or Incomplete Data:**
-    - If population data for a selected geographical level is missing or incomplete, the system notifies the user and halts the report generation.
-    - The user may then retry with different parameters or address the data issues.
+5. **Missing or Incomplete Data:**
+   1. If population data for a selected geographical level is missing or incomplete, the system notifies the _**data analyst**_ and halts the report generation.
+   2. The _**data analyst**_ may then retry with different parameters or address the data issues.
 
 ## SUB-VARIATIONS
 
-1. **Report for Top N Populated Countries:**
-    - The user can opt to filter the report to only show the top N populated countries at the selected geographical level.
+1. **Report for Spoken Languages:**
+   1. The _**United Nations**_ requests a population report for the number of people who speak Chinese, English, Hindi, Spanish and Arabic in descending order.
 
 ## SCHEDULE
 
