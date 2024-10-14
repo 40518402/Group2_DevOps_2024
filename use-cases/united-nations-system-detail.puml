@@ -1,0 +1,121 @@
+@startuml
+
+left to right direction
+
+actor "Data Analyst" as user
+
+package "United Nations" {
+
+  rectangle "Reports Generation" {
+    
+    usecase "Generate World Country Report" as WCReport
+    usecase "Generate Continent Country Report" as CCReport
+    usecase "Generate Region Country Report" as RCReport
+    usecase "Generate Top N World Country Report" as TWCReport
+    usecase "Generate Top N Continent Country Report" as TCCReport
+    usecase "Generate Top N Region Country Report" as TRCReport
+
+    usecase "Generate World City Report" as WCityReport
+    usecase "Generate Continent City Report" as CCityReport
+    usecase "Generate Region City Report" as RCityReport
+    usecase "Generate Country City Report" as CnCityReport
+    usecase "Generate District City Report" as DCityReport
+    usecase "Generate Top N World City Report" as TWCityReport
+    usecase "Generate Top N Continent City Report" as TCiCityReport
+    usecase "Generate Top N Region City Report" as TRCityReport
+    usecase "Generate Top N Country City Report" as TCCnCityReport
+    usecase "Generate Top N District City Report" as TDCityReport
+
+    usecase "Generate World Capital Report" as WCapReport
+    usecase "Generate Continent Capital Report" as CCapReport
+    usecase "Generate Region Capital Report" as RCapReport
+    usecase "Generate Top N World Capital Report" as TNWCapReport
+    usecase "Generate Top N Continent Capital Report" as TNCCapReport
+    usecase "Generate Top N Region Capital Report" as TNRCapReport
+
+    usecase "Generate Population Report" as PopReport
+    usecase "Generate Population of World" as PopWorld
+    usecase "Generate Population of Continent" as PopContinent
+    usecase "Generate Population of Region" as PopRegion
+    usecase "Generate Population of Country" as PopCountry
+    usecase "Generate Population of District" as PopDistrict
+    usecase "Generate Population of City" as PopCity
+
+    usecase "Generate Language Report" as LangReport
+  }
+
+}
+
+database "World Database" as database
+
+user --> WCReport : Request Report
+user --> CCReport
+user --> RCReport
+user --> TWCReport
+user --> TCCReport
+user --> TRCReport
+
+user --> WCityReport
+user --> CCityReport
+user --> RCityReport
+user --> CnCityReport
+user --> DCityReport
+user --> TWCityReport
+user --> TCiCityReport
+user --> TRCityReport
+user --> TCCnCityReport
+user --> TDCityReport
+
+user --> WCapReport
+user --> CCapReport
+user --> RCapReport
+user --> TNWCapReport
+user --> TNCCapReport
+user --> TNRCapReport
+
+user --> PopReport
+user --> PopWorld
+user --> PopContinent
+user --> PopRegion
+user --> PopCountry
+user --> PopDistrict
+user --> PopCity
+
+user --> LangReport
+
+WCReport --> database : Fetch World Country Data
+CCReport --> database : Fetch Continent Country Data
+RCReport --> database : Fetch Region Country Data
+TWCReport --> database : Fetch Top N World Country Data
+TCCReport --> database : Fetch Top N Continent Country Data
+TRCReport --> database : Fetch Top N Region Country Data
+
+WCityReport --> database : Fetch World City Data
+CCityReport --> database : Fetch Continent City Data
+RCityReport --> database : Fetch Region City Data
+CnCityReport --> database : Fetch Country City Data
+DCityReport --> database : Fetch District City Data
+TWCityReport --> database : Fetch Top N World City Data
+TCiCityReport --> database : Fetch Top N Continent City Data
+TRCityReport --> database : Fetch Top N Region City Data
+TCCnCityReport --> database : Fetch Top N Country City Data
+TDCityReport --> database : Fetch Top N District City Data
+
+WCapReport --> database : Fetch World Capital Data
+CCapReport --> database : Fetch Continent Capital Data
+RCapReport --> database : Fetch Region Capital Data
+TNWCapReport --> database : Fetch Top N World Capital Data
+TNCCapReport --> database : Fetch Top N Continent Capital Data
+TNRCapReport --> database : Fetch Top N Region Capital Data
+
+PopReport --> database : Fetch Population Data
+PopWorld --> database : Fetch World Population Data
+PopContinent --> database : Fetch Continent Population Data
+PopRegion --> database : Fetch Region Population Data
+PopCountry --> database : Fetch Country Population Data
+PopDistrict --> database : Fetch District Population Data
+PopCity --> database : Fetch City Population Data
+
+LangReport --> database : Fetch Language Population Data
+
+@enduml
