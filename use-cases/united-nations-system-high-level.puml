@@ -1,29 +1,25 @@
 @startuml
+left to right direction
 
-actor OW as "Data Analyst"
+actor DA as "Data Analyst"
 
 rectangle "World Database"
 
 rectangle "United Nations App System" {
-    usecase UC1 as "Reports Generation"
-    usecase UC1.1 as "Country"
-    usecase UC1.2 as "City"
-    usecase UC1.3 as "Capital"
-    usecase UC1.4 as "Population"
+    usecase UC1 as "Generate country report"
+    usecase UC2 as "Generate city report"
+    usecase UC3 as "Generate capital city report"
+    usecase UC4 as "Generate population report"
 
-    usecase UCa as "Print Reports"
+    DA -- UC1
+    DA -- UC2
+    DA -- UC3
+    DA -- UC4
 
-    OW - UC1
-    UC1  ..> UC1.1 : optional
-        UC1.1 --> UCa : include
-    UC1  ..> UC1.2 : optional
-        UC1.2 --> UCa : include
-    UC1  ..> UC1.3 : optional
-        UC1.3 --> UCa : include
-    UC1  ..> UC1.4 : optional
-        UC1.4 --> UCa : include
-
-    UC1  - "World Database"
+    UC1 -- "World Database"
+    UC2 -- "World Database"
+    UC3 -- "World Database"
+    UC4 -- "World Database"
 }
 
 @enduml
