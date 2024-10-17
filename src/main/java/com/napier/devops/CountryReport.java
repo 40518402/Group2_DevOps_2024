@@ -102,4 +102,46 @@ public class CountryReport extends Report {
             return null;
         }
     }
+    /**
+     * Gets all the countries in a region, organized by population (largest to smallest).
+     * @return A list of all countries in a region, or null if there is an error.
+     */
+    public ArrayList<CountryReport> getCountriesByRegion(String region) {
+        try {
+            // SQL query to get countries in a region, ordered by population
+            String query = "SELECT ctry.Code, ctry.Name, ctry.Continent, ctry.Region, ctry.Population, cty.Name AS Capital "
+                    + "FROM country ctry, city cty "
+                    + "WHERE ctry.Code = cty.CountryCode "
+                    + "AND ctry.Capital = cty.ID "
+                    + "AND ctry.Region = ? "
+                    + "ORDER BY ctry.Population DESC";
+
+            // Prepare the SQL statement with the region parameter
+            PreparedStatement prepStmt = getConnection().prepareStatement(query);
+            prepStmt.setString(1, region);
+
+            ResultSet rset = prepStmt.executeQuery();
+
+            ArrayList<CountryReport> countries = new ArrayList<>();
+
+            // Loop through the result set and create CountryReport objects
+            while (rset.next()) {
+                CountryReport country = new CountryReport();
+                country.setCode(rset.getString("ctry.Code"));
+                country.setName(rset.getString("ctry.Name"));
+                country.setContinent(rset.getString("ctry.Continent"));
+                country.setRegion(rset.getString("ctry.Region"));
+                country.setPopulation(rset.getInt("ctry.Population"));
+                country.setCapital(rset.getString("Capital"));
+
+                countries.add(country);
+            }
+            return countries;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve details.");
+            return null;
+        }
+    }
 }

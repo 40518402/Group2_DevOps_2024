@@ -17,6 +17,10 @@ public class Apps
         ArrayList<CountryReport> countries = ctryReport.getTopCountriesByContinent("Asia", 10);
         ctryReport.displayCountries(countries);
 
+        // Getting All Countries In a Region
+        ArrayList<CountryReport> region = ctryReport.getCountriesByRegion("Caribbean");
+        ctryReport.displayCountries(region);
+
         // Disconnect from database
         ctryReport.disconnect();
     }
