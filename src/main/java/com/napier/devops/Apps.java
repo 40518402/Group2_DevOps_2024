@@ -3,6 +3,10 @@ package com.napier.devops;
 //import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * This class serves as the entry point for the application and generates the various reports
+ * for the user.
+ */
 public class Apps
 {
     public static void main(String[] args)

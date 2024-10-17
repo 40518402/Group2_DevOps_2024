@@ -5,7 +5,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 /**
- * Represents a country
+ * Represents a country report in the system
+ * This class stores report information such as code, name, continent, region, population and capital
  */
 public class CountryReport extends Report {
     private String code;
@@ -63,9 +64,10 @@ public class CountryReport extends Report {
     }
 
     /**
-     * Gets all the countries in a continent.
-     *
-     * @return A list of all countries in a continent, or null if there is an error.
+     * Gets the top N populated countries in a continent where N is provided by the user.
+     * @param continent The continent for which the top populated countries will be retrieved.
+     * @param N         The number of top populated countries to retrieve.
+     * @return A list of all top N populated countries in a continent, or null if there is an error.
      */
     public ArrayList<CountryReport> getTopCountriesByContinent(String continent, int N) {
         try {
@@ -98,10 +100,11 @@ public class CountryReport extends Report {
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get Country details.");
+            System.out.println("Failed to retrieve country details.");
             return null;
         }
     }
+
     /**
      * Gets all the countries in a region, organized by population (largest to smallest).
      * @return A list of all countries in a region, or null if there is an error.
