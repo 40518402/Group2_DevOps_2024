@@ -2,6 +2,7 @@ package com.napier.devops;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -54,13 +55,31 @@ public class CountryReport extends Report {
     public void displayCountries(ArrayList<CountryReport> countries) {
         // Print header
         System.out.println(String.format("%-5s %-22s %-10s %-28s %20s %10s", "Code", "Name", "Continent", "Region", "Population", "Capital"));
-        // Loop over all employees in the list
+        // Loop over all countries in the list
         for (CountryReport country : countries) {
             String country_string =
                     String.format("%-5s %-22s %-10s %-28s %20s %10s",
                             country.getCode(), country.getName(), country.getContinent(), country.getRegion(), country.getPopulation(), country.getCapital());
             System.out.println(country_string);
         }
+    }
+
+    /**
+     * Converts a result set row into a CountryReport object.
+     * @param rset Holds query result set containing country data.
+     * @return A CountryReport instance.
+     * @throws SQLException If SQL error occurs while accessing data.
+     */
+    public CountryReport mapToCountry(ResultSet rset) throws SQLException {
+        CountryReport country = new CountryReport();
+        country.setCode(rset.getString("ctry.Code"));
+        country.setName(rset.getString("ctry.Name"));
+        country.setContinent(rset.getString("ctry.Continent"));
+        country.setRegion(rset.getString("ctry.Region"));
+        country.setPopulation(rset.getInt("ctry.Population"));
+        country.setCapital(rset.getString("Capital"));
+
+        return country;
     }
 
     /**
@@ -71,12 +90,13 @@ public class CountryReport extends Report {
      */
     public ArrayList<CountryReport> getTopCountriesByContinent(String continent, int N) {
         try {
-            String query = "SELECT ctry.Code, ctry.Name, ctry.Continent, ctry.Region, ctry.Population, cty.Name "
+            String query = "SELECT ctry.Code, ctry.Name, ctry.Continent, ctry.Region, ctry.Population, cty.Name As Capital "
                     + "FROM country ctry,  city cty "
                     + "WHERE ctry.Code = cty.CountryCode "
                     + "AND ctry.Capital = cty.ID AND Continent = ? "
                     + "ORDER BY Population DESC "
                     + "LIMIT ?";
+
             PreparedStatement prepStmt = getConnection().prepareStatement(query);
             prepStmt.setString(1, continent);
             prepStmt.setInt(2, N);
@@ -86,21 +106,13 @@ public class CountryReport extends Report {
             ArrayList<CountryReport> countries = new ArrayList<>();
 
             while (rset.next()) {
-                CountryReport country = new CountryReport();
-                country.setCode(rset.getString("ctry.Code"));
-                country.setName(rset.getString("ctry.Name"));
-                country.setContinent(rset.getString("ctry.Continent"));
-                country.setRegion(rset.getString("ctry.Region"));
-                country.setPopulation(rset.getInt("ctry.Population"));
-                country.setCapital(rset.getString("cty.Name"));
-
-                countries.add(country);
+                countries.add(mapToCountry(rset));
             }
             return countries;
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve country details.");
+            System.out.println("Failed to retrieve details.");
             return null;
         }
     }
@@ -129,15 +141,7 @@ public class CountryReport extends Report {
 
             // Loop through the result set and create CountryReport objects
             while (rset.next()) {
-                CountryReport country = new CountryReport();
-                country.setCode(rset.getString("ctry.Code"));
-                country.setName(rset.getString("ctry.Name"));
-                country.setContinent(rset.getString("ctry.Continent"));
-                country.setRegion(rset.getString("ctry.Region"));
-                country.setPopulation(rset.getInt("ctry.Population"));
-                country.setCapital(rset.getString("Capital"));
-
-                countries.add(country);
+                countries.add(mapToCountry(rset));
             }
             return countries;
 

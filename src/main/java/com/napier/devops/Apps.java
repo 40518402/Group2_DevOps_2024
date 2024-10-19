@@ -1,6 +1,5 @@
 package com.napier.devops;
 
-//import java.sql.*;
 import java.util.ArrayList;
 
 /**
@@ -20,6 +19,8 @@ public class Apps
         // Getting Top Countries By Continent
         ArrayList<CountryReport> countries = ctryReport.getTopCountriesByContinent("Asia", 10);
         ctryReport.displayCountries(countries);
+
+        System.out.println();
 
         // Getting All Countries In a Region
         ArrayList<CountryReport> region = ctryReport.getCountriesByRegion("Caribbean");
