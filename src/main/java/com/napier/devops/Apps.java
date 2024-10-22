@@ -31,6 +31,11 @@ public class Apps
         ArrayList<CountryReport> topCountiresByRegion = ctryReport.getTopCountiresByRegion("Caribbean", 10);
         ctryReport.displayCountries(topCountiresByRegion);
 
+        // Get the top N populated countries in the world where N is provided by the user.
+        ArrayList<CountryReport> get_countries_InWorld = ctryReport.get_countries_InWorld("Countries", 10);
+        ctryReport.displayCountries(get_countries_InWorld);
+
+        System.out.println();
         // Disconnect from database
         ctryReport.disconnect();
     }

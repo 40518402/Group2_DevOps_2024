@@ -66,6 +66,7 @@ public class CountryReport extends Report {
 
     /**
      * Converts a result set row into a CountryReport object.
+     *
      * @param rset Holds query result set containing country data.
      * @return A CountryReport instance.
      * @throws SQLException If SQL error occurs while accessing data.
@@ -84,6 +85,7 @@ public class CountryReport extends Report {
 
     /**
      * Gets the top N populated countries in a continent where N is provided by the user.
+     *
      * @param continent The continent for which the top populated countries will be retrieved.
      * @param N         The number of top populated countries to retrieve.
      * @return A list of all top N populated countries in a continent, or null if there is an error.
@@ -119,6 +121,7 @@ public class CountryReport extends Report {
 
     /**
      * Gets all the countries in a region, organized by population (largest to smallest).
+     *
      * @return A list of all countries in a region, or null if there is an error.
      */
     public ArrayList<CountryReport> getCountriesByRegion(String region) {
@@ -190,5 +193,42 @@ public class CountryReport extends Report {
             System.out.println("Failed to retrieve details.");
             return null;
         }
+
+    }
+    /**
+     * Get the top N populated countries in the world where N is provided by the user.
+     *
+     * @param countries The countries for which the users will populate.
+     * @param N         The number of countries to retrieve.
+     * @return A list of N populated countries in a World, where N is Provided by the user.
+     */
+    public ArrayList<CountryReport> get_countries_InWorld(String countries, int N) {
+
+        N = 10;
+
+        try {
+            // SQL query to get countries in the world Populated by user;
+            String query = "SELECT ctry.Name "
+                    + "FROM country ctry ";
+
+            // Prepare the SQL statement with the region parameter
+            PreparedStatement prepStmt = getConnection().prepareStatement(query);
+            prepStmt.setString(N, String.valueOf(N));
+
+            //Execute Query
+            ResultSet rs = prepStmt.executeQuery();
+
+            // Process the result set
+            while (rs.next()) {
+                int name = rs.getInt("Countries");
+                System.out.println("Countries: " + name);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve details.");
+            return null;
+        }
+        return null;
     }
 }
