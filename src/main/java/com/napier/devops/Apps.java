@@ -26,6 +26,11 @@ public class Apps
         ArrayList<CountryReport> region = ctryReport.getCountriesByRegion("Caribbean");
         ctryReport.displayCountries(region);
 
+        System.out.println();
+
+        ArrayList<CountryReport> topCountiresByRegion = ctryReport.getTopCountiresByRegion("Caribbean", 10);
+        ctryReport.displayCountries(topCountiresByRegion);
+
         // Disconnect from database
         ctryReport.disconnect();
     }

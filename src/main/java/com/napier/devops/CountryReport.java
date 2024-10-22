@@ -151,4 +151,44 @@ public class CountryReport extends Report {
             return null;
         }
     }
+
+    /**
+     * Gets the top N populated countries in a region where N is provided by the user.
+     *
+     * @param region The region for which the top populated countries will be retrieved.
+     * @param N      The number of top populated countries to retrieve.
+     * @return A list of all top N populated countries in a region, or an empty list if there is an error.
+     */
+    public ArrayList<CountryReport> getTopCountiresByRegion(String region, int N) {
+        try {
+            // SQL query to get countries in a region, ordered by population
+            String query = "SELECT ctry.Code, ctry.Name, ctry.Continent, ctry.Region, ctry.Population, cty.Name AS Capital "
+                    + "FROM country ctry, city cty "
+                    + "WHERE ctry.Code = cty.CountryCode "
+                    + "AND ctry.Capital = cty.ID "
+                    + "AND ctry.Region = ? "
+                    + "ORDER BY ctry.Population DESC "
+                    + "LIMIT ?";
+
+            // Prepare the SQL statement with the region parameter
+            PreparedStatement prepStmt = getConnection().prepareStatement(query);
+            prepStmt.setString(1, region);
+            prepStmt.setInt(2, N);
+
+            ResultSet rset = prepStmt.executeQuery();
+
+            ArrayList<CountryReport> countries = new ArrayList<>();
+
+            // Loop through the result set and create CountryReport objects
+            while (rset.next()) {
+                countries.add(mapToCountry(rset));
+            }
+            return countries;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve details.");
+            return null;
+        }
+    }
 }
