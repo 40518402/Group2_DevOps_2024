@@ -35,7 +35,7 @@ public class Apps
         System.out.println();
 
         // Getting the top N populated countries in a region where N is provided by the user.
-        ArrayList<CountryReport> topCountriesByRegion = ctryReport.getTopCountiresByRegion("Caribbean", 10);
+        ArrayList<CountryReport> topCountriesByRegion = ctryReport.getTopCountriesByRegion("Caribbean", 10);
         ctryReport.displayCountries(topCountriesByRegion);
 
         System.out.println();
@@ -46,9 +46,10 @@ public class Apps
 
         System.out.println();
 
-        // Get the top N populated countries in the world where N is provided by the user.
+        // Get all the countries in the world organised by largest population to smallest.
         ArrayList<CountryReport> countriesInWorld = ctryReport.getCountriesByWorldPopulation();
         ctryReport.displayCountries(countriesInWorld);
+
         // Disconnect from database
         ctryReport.disconnect();
     }
