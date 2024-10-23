@@ -41,11 +41,14 @@ public class Apps
         System.out.println();
 
         // Get the top N populated countries in the world where N is provided by the user.
-        ArrayList<CountryReport> countriesInWorld = ctryReport.getCountriesInWorld(10);
-        ctryReport.displayCountries(countriesInWorld);
+        ArrayList<CountryReport> topCountriesInWorld = ctryReport.getCountriesInWorld(10);
+        ctryReport.displayCountries(topCountriesInWorld);
 
         System.out.println();
 
+        // Get the top N populated countries in the world where N is provided by the user.
+        ArrayList<CountryReport> countriesInWorld = ctryReport.getCountriesByWorldPopulation();
+        ctryReport.displayCountries(countriesInWorld);
         // Disconnect from database
         ctryReport.disconnect();
     }

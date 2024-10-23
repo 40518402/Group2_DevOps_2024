@@ -243,4 +243,41 @@ public class CountryReport extends Report {
             return null;
         }
     }
+
+    /**
+     * Gets all the countries in the world, organized by population (largest to smallest).
+     *
+     * @return A list of all countries in the world, or null if there is an error.
+     */
+    public ArrayList<CountryReport> getCountriesByWorldPopulation() {
+        try {
+            // SQL query to get all countries in the world, ordered by population
+            String query = "SELECT ctry.Code, ctry.Name, ctry.Continent, ctry.Region, ctry.Population, cty.Name AS Capital "
+                    + "FROM country ctry, city cty "
+                    + "WHERE ctry.Code = cty.CountryCode "
+                    + "AND ctry.Capital = cty.ID "
+                    + "ORDER BY ctry.Population DESC";
+
+            // Prepare the SQL statement
+            PreparedStatement prepStmt = getConnection().prepareStatement(query);
+
+            ResultSet rset = prepStmt.executeQuery();
+
+            ArrayList<CountryReport> countries = new ArrayList<>();
+
+            // Loop through the result set and create CountryReport objects
+            while (rset.next()) {
+                countries.add(mapToCountry(rset));
+            }
+            return countries;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve country details.");
+            return null;
+        }
+    }
 }
+
+
+
