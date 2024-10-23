@@ -16,8 +16,14 @@ public class Apps
         // Connect to database
         ctryReport.connect();
 
-        // Getting Top Countries By Continent
-        ArrayList<CountryReport> countries = ctryReport.getTopCountriesByContinent("Asia", 10);
+        // Getting Top Countries In a Continent
+        ArrayList<CountryReport> topCountries = ctryReport.getCountriesByContinent("Asia", 10);
+        ctryReport.displayCountries(topCountries);
+
+        System.out.println();
+
+        // Getting All Countries In a Continent
+        ArrayList<CountryReport> countries = ctryReport.getCountriesByContinent("Asia");
         ctryReport.displayCountries(countries);
 
         System.out.println();
@@ -31,11 +37,14 @@ public class Apps
         ArrayList<CountryReport> topCountiresByRegion = ctryReport.getTopCountiresByRegion("Caribbean", 10);
         ctryReport.displayCountries(topCountiresByRegion);
 
+        System.out.println();
+
         // Get the top N populated countries in the world where N is provided by the user.
         ArrayList<CountryReport> get_countries_InWorld = ctryReport.get_countries_InWorld("Countries", 10);
         ctryReport.displayCountries(get_countries_InWorld);
 
         System.out.println();
+
         // Disconnect from database
         ctryReport.disconnect();
     }

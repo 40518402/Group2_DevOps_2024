@@ -84,24 +84,33 @@ public class CountryReport extends Report {
     }
 
     /**
-     * Gets the top N populated countries in a continent where N is provided by the user.
+     * Retrieves all the countries in a continent in descending order, or the top N populated countries if N is not null.
+     * Requirements:
+     * 2. All the countries in a continent organised by largest population to smallest.
+     * 5. The top N populated countries in a continent where N is provided by the user.
      *
      * @param continent The continent for which the top populated countries will be retrieved.
      * @param N         The number of top populated countries to retrieve.
      * @return A list of all top N populated countries in a continent, or null if there is an error.
      */
-    public ArrayList<CountryReport> getTopCountriesByContinent(String continent, int N) {
+    public ArrayList<CountryReport> getCountriesByContinent(String continent, Integer N) {
         try {
             String query = "SELECT ctry.Code, ctry.Name, ctry.Continent, ctry.Region, ctry.Population, cty.Name As Capital "
                     + "FROM country ctry,  city cty "
                     + "WHERE ctry.Code = cty.CountryCode "
                     + "AND ctry.Capital = cty.ID AND Continent = ? "
-                    + "ORDER BY Population DESC "
-                    + "LIMIT ?";
+                    + "ORDER BY Population DESC";
+
+            if (N != null) {
+                query += " LIMIT ?";
+            }
 
             PreparedStatement prepStmt = getConnection().prepareStatement(query);
             prepStmt.setString(1, continent);
-            prepStmt.setInt(2, N);
+
+            if (N != null) {
+                prepStmt.setInt(2, N);
+            }
 
             ResultSet rset = prepStmt.executeQuery();
 
@@ -117,6 +126,11 @@ public class CountryReport extends Report {
             System.out.println("Failed to retrieve details.");
             return null;
         }
+    }
+
+    // Using method overloading to set a default value of null for N.
+    public ArrayList<CountryReport> getCountriesByContinent(String continent) {
+        return getCountriesByContinent(continent, null);
     }
 
     /**
