@@ -85,9 +85,6 @@ public class CountryReport extends Report {
 
     /**
      * Retrieves all the countries in a continent in descending order, or the top N populated countries if N is not null.
-     * Requirements:
-     * 2. All the countries in a continent organised by largest population to smallest.
-     * 5. The top N populated countries in a continent where N is provided by the user.
      *
      * @param continent The continent for which the top populated countries will be retrieved.
      * @param N         The number of top populated countries to retrieve.
@@ -212,37 +209,38 @@ public class CountryReport extends Report {
     /**
      * Get the top N populated countries in the world where N is provided by the user.
      *
-     * @param countries The countries for which the users will populate.
      * @param N         The number of countries to retrieve.
      * @return A list of N populated countries in a World, where N is Provided by the user.
      */
-    public ArrayList<CountryReport> get_countries_InWorld(String countries, int N) {
-
-        N = 10;
-
+    public ArrayList<CountryReport> getCountriesInWorld(int N) {
         try {
             // SQL query to get countries in the world Populated by user;
-            String query = "SELECT ctry.Name "
-                    + "FROM country ctry ";
+            String query = "SELECT ctry.Code, ctry.Name, ctry.Continent, ctry.Region, ctry.Population, cty.Name AS Capital "
+                    + "FROM country ctry, city cty "
+                    + "WHERE ctry.Code = cty.CountryCode "
+                    + "AND ctry.Capital = cty.ID "
+                    + "ORDER BY ctry.Population DESC "
+                    + "LIMIT ?";
 
             // Prepare the SQL statement with the region parameter
             PreparedStatement prepStmt = getConnection().prepareStatement(query);
-            prepStmt.setString(N, String.valueOf(N));
+            prepStmt.setInt(1, N);
 
             //Execute Query
-            ResultSet rs = prepStmt.executeQuery();
+            ResultSet rset = prepStmt.executeQuery();
+
+            ArrayList<CountryReport> countries = new ArrayList<>();
 
             // Process the result set
-            while (rs.next()) {
-                int name = rs.getInt("Countries");
-                System.out.println("Countries: " + name);
+            while (rset.next()) {
+                countries.add(mapToCountry(rset));
             }
+            return countries;
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to retrieve details.");
             return null;
         }
-        return null;
     }
 }
