@@ -53,10 +53,20 @@ public class CountryReport extends Report {
      * @param countries The list of countries to print.
      */
     public void displayCountries(ArrayList<CountryReport> countries) {
+        // Check countries is not null
+        if (countries == null)
+        {
+            System.out.println("No countries found!");
+            return;
+        }
+
         // Print header
         System.out.println(String.format("%-5s %-22s %-10s %-28s %20s %10s", "Code", "Name", "Continent", "Region", "Population", "Capital"));
         // Loop over all countries in the list
         for (CountryReport country : countries) {
+            if (country == null) {
+                continue;
+            }
             String country_string =
                     String.format("%-5s %-22s %-10s %-28s %20s %10s",
                             country.getCode(), country.getName(), country.getContinent(), country.getRegion(), country.getPopulation(), country.getCapital());
