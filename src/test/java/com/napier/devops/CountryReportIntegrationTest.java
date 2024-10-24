@@ -23,12 +23,15 @@ public class CountryReportIntegrationTest
     @Test
     void testGetCountriesByContinent()
     {
-        ArrayList<CountryReport> countries = countryReport.getCountriesByContinent("Asia", 1);
-        assertEquals(countries.get(0).getCode(), "CHN");
-        assertEquals(countries.get(0).getName(), "China");
-        assertEquals(countries.get(0).getContinent(), "Asia");
-        assertEquals(countries.get(0).getRegion(), "Eastern Asia");
-        assertEquals(countries.get(0).getPopulation(), 1277558000);
-        assertEquals(countries.get(0).getCapital(), "Peking");
+        ArrayList<CountryReport> countries = countryReport.getCountriesByContinent("Asia", 5);
+
+        CountryReport firstCountry = countries.get(0);
+
+        assertEquals("CHN", firstCountry.getCode());
+        assertEquals("China", firstCountry.getName());
+        assertEquals("Asia", firstCountry.getContinent());
+        assertEquals("Eastern Asia", firstCountry.getRegion());
+        assertEquals(1277558000, firstCountry.getPopulation());
+        assertEquals("Peking", firstCountry.getCapital());
     }
 }
