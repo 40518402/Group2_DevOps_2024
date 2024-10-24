@@ -61,15 +61,15 @@ public class CountryReport extends Report {
         }
 
         // Print header
-        System.out.println(String.format("%-5s %-22s %-10s %-28s %20s %10s", "Code", "Name", "Continent", "Region", "Population", "Capital"));
+        System.out.println(String.format("%-5s %-48s %-15s %-28s %20s %10s", "Code", "Name", "Continent", "Region", "Population", "Capital"));
         // Loop over all countries in the list
         for (CountryReport country : countries) {
             if (country == null) {
                 continue;
             }
             String country_string =
-                    String.format("%-5s %-22s %-10s %-28s %20s %10s",
-                            country.getCode(), country.getName(), country.getContinent(), country.getRegion(), country.getPopulation(), country.getCapital());
+                    String.format("%-5s %-48s %-15s %-28s %20s %10s",
+                            country.getCode(), country.getName(), country.getContinent(), country.getRegion(), country.getPopulation(), country.getCapital() != null ? country.getCapital() : "N/A");
             System.out.println(country_string);
         }
     }
@@ -175,9 +175,9 @@ public class CountryReport extends Report {
     public ArrayList<CountryReport> getCountriesByContinent(String continent, Integer N) {
         try {
             String query = "SELECT ctry.Code, ctry.Name, ctry.Continent, ctry.Region, ctry.Population, cty.Name As Capital "
-                    + "FROM country ctry,  city cty "
-                    + "WHERE ctry.Code = cty.CountryCode "
-                    + "AND ctry.Capital = cty.ID AND Continent = ? "
+                    + "FROM country ctry "
+                    + "LEFT JOIN city cty ON ctry.Capital = cty.ID "
+                    + "WHERE Continent = ? "
                     + "ORDER BY Population DESC";
 
             if (N != null) {

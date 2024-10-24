@@ -21,13 +21,13 @@ public class Apps
         }
 
         // Getting the top N populated countries in a continent where N is provided by the user.
-        ArrayList<CountryReport> topCountries = ctryReport.getCountriesByContinent("Asia", 10);
+        ArrayList<CountryReport> topCountries = ctryReport.getCountriesByContinent("Asia", 5);
         ctryReport.displayCountries(topCountries);
 
         System.out.println();
 
         // Getting all the countries in a continent organised by largest population to smallest.
-        ArrayList<CountryReport> countries = ctryReport.getCountriesByContinent("Asia");
+        ArrayList<CountryReport> countries = ctryReport.getCountriesByContinent("Antarctica");
         ctryReport.displayCountries(countries);
 
         System.out.println();
