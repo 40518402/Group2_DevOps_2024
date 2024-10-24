@@ -14,7 +14,11 @@ public class Apps
         CountryReport ctryReport = new CountryReport();
 
         // Connect to database
-        ctryReport.connect();
+        if(args.length < 1){
+            ctryReport.connect("localhost:33060", 30000);
+        }else{
+            ctryReport.connect(args[0], Integer.parseInt(args[1]));
+        }
 
         // Getting the top N populated countries in a continent where N is provided by the user.
         ArrayList<CountryReport> topCountries = ctryReport.getCountriesByContinent("Asia", 10);
