@@ -87,7 +87,7 @@ public class CountryReport extends Report {
         country.setName(rset.getString("ctry.Name"));
         country.setContinent(rset.getString("ctry.Continent"));
         country.setRegion(rset.getString("ctry.Region"));
-        country.setPopulation(rset.getInt("ctry.Population"));
+        country.setPopulation(rset.getLong("ctry.Population"));
         country.setCapital(rset.getString("Capital"));
 
         return country;
