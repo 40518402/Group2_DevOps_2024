@@ -5,6 +5,7 @@
 * Release [![Releases](https://img.shields.io/github/release/40518402/Group2_DevOps_2024/all.svg?style=flat-square)](https://github.com/40518402/Group2_DevOps_2024/releases)
 * Workflow Status  ![workflow](https://github.com/40518402/Group2_DevOps_2024/actions/workflows/main.yml/badge.svg)
 * License [![LICENSE](https://img.shields.io/github/license/40518402/Group2_DevOps_2024.svg?style=flat-square)](https://github.com/40518402/Group2_DevOps_2024/blob/master/LICENSE)
+* Master Code Coverage [![codecov](https://codecov.io/github/40518402/Group2_DevOps_2024//branch/master/graph/badge.svg?token=ES6WGKMHF6)](https://codecov.io/github/40518402/Group2_DevOps_2024)
 
 | ID | Name | Met | Image |
 | --- | ---- | --- |----- |
