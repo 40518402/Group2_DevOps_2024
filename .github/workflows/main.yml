@@ -4,6 +4,8 @@ on:
     branches:
       - master
       - develop
+      - feature/capital-city-reports
+      - feature/city-reports
 jobs:
   UnitTests:
     name: Unit Tests
