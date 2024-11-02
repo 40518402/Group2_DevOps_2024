@@ -21,25 +21,25 @@ public class Apps
         }
 
         // Getting the top N populated countries in a continent where N is provided by the user.
-        ArrayList<CountryReport> topCountries = ctryReport.getCountriesByContinent("Asia", 5);
+        ArrayList<CountryReport> topCountries = ctryReport.getCountriesInContinent("Asia", 5);
         ctryReport.displayCountries(topCountries);
 
         System.out.println();
 
         // Getting all the countries in a continent organised by largest population to smallest.
-        ArrayList<CountryReport> countries = ctryReport.getCountriesByContinent("Antarctica");
+        ArrayList<CountryReport> countries = ctryReport.getCountriesInContinent("Antarctica");
         ctryReport.displayCountries(countries);
 
         System.out.println();
 
         // Getting All Countries In a Region
-        ArrayList<CountryReport> region = ctryReport.getCountriesByRegion("Caribbean");
+        ArrayList<CountryReport> region = ctryReport.getCountriesInRegion("Caribbean");
         ctryReport.displayCountries(region);
 
         System.out.println();
 
         // Getting the top N populated countries in a region where N is provided by the user.
-        ArrayList<CountryReport> topCountriesByRegion = ctryReport.getTopCountriesByRegion("Caribbean", 10);
+        ArrayList<CountryReport> topCountriesByRegion = ctryReport.getCountriesInRegion("Caribbean", 10);
         ctryReport.displayCountries(topCountriesByRegion);
 
         System.out.println();
@@ -51,7 +51,7 @@ public class Apps
         System.out.println();
 
         // Get all the countries in the world organised by largest population to smallest.
-        ArrayList<CountryReport> countriesInWorld = ctryReport.getCountriesByWorldPopulation();
+        ArrayList<CountryReport> countriesInWorld = ctryReport.getCountriesInWorld();
         ctryReport.displayCountries(countriesInWorld);
 
         // Disconnect from database

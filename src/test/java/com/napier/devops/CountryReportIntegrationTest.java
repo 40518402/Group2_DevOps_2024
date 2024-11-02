@@ -23,7 +23,7 @@ public class CountryReportIntegrationTest
     @Test
     void testGetCountriesByContinent()
     {
-        ArrayList<CountryReport> countries = countryReport.getCountriesByContinent("Asia", 5);
+        ArrayList<CountryReport> countries = countryReport.getCountriesInContinent("Asia", 5);
 
         CountryReport firstCountry = countries.get(0);
 

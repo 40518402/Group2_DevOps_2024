@@ -94,21 +94,29 @@ public class CountryReport extends Report {
     }
 
     /**
-     * Gets all the countries in the world, organized by population (largest to smallest).
+     * Gets all the countries in the world, organized by population (largest to smallest), or the top N populated countries if N is not null.
+     *
+     * @param N The number of top populated countries to retrieve.
      *
      * @return A list of all countries in the world, or null if there is an error.
      */
-    public ArrayList<CountryReport> getCountriesByWorldPopulation() {
-        try {
-            // SQL query to get all countries in the world, ordered by population
-            String query = "SELECT ctry.Code, ctry.Name, ctry.Continent, ctry.Region, ctry.Population, cty.Name AS Capital "
-                    + "FROM country ctry, city cty "
-                    + "WHERE ctry.Code = cty.CountryCode "
-                    + "AND ctry.Capital = cty.ID "
-                    + "ORDER BY ctry.Population DESC";
+    public ArrayList<CountryReport> getCountriesInWorld(Integer N) {
+        // SQL query to get all countries in the world, ordered by population
+        String query = "SELECT ctry.Code, ctry.Name, ctry.Continent, ctry.Region, ctry.Population, cty.Name AS Capital "
+                + "FROM country ctry "
+                + "LEFT JOIN city cty ON ctry.Capital = cty.ID "
+                + "ORDER BY ctry.Population DESC";
 
-            // Prepare the SQL statement
-            PreparedStatement prepStmt = getConnection().prepareStatement(query);
+        if (N != null) {
+            query += " LIMIT ?";
+        }
+
+        // Prepare the SQL statement
+        try(PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
+
+            if (N != null) {
+                prepStmt.setInt(1, N);
+            }
 
             ResultSet rset = prepStmt.executeQuery();
 
@@ -127,64 +135,30 @@ public class CountryReport extends Report {
         }
     }
 
-    /**
-     * Get the top N populated countries in the world where N is provided by the user.
-     *
-     * @param N         The number of countries to retrieve.
-     * @return A list of N populated countries in a World, where N is Provided by the user.
-     */
-    public ArrayList<CountryReport> getCountriesInWorld(int N) {
-        try {
-            // SQL query to get countries in the world Populated by user;
-            String query = "SELECT ctry.Code, ctry.Name, ctry.Continent, ctry.Region, ctry.Population, cty.Name AS Capital "
-                    + "FROM country ctry, city cty "
-                    + "WHERE ctry.Code = cty.CountryCode "
-                    + "AND ctry.Capital = cty.ID "
-                    + "ORDER BY ctry.Population DESC "
-                    + "LIMIT ?";
-
-            // Prepare the SQL statement with the region parameter
-            PreparedStatement prepStmt = getConnection().prepareStatement(query);
-            prepStmt.setInt(1, N);
-
-            //Execute Query
-            ResultSet rset = prepStmt.executeQuery();
-
-            ArrayList<CountryReport> countries = new ArrayList<>();
-
-            // Process the result set
-            while (rset.next()) {
-                countries.add(mapToCountry(rset));
-            }
-            return countries;
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve details.");
-            return null;
-        }
+    // Using method overloading to set a default value of null for N.
+    public ArrayList<CountryReport> getCountriesInWorld() {
+        return getCountriesInWorld(null);
     }
 
     /**
      * Retrieves all the countries in a continent in descending order, or the top N populated countries if N is not null.
      *
      * @param continent The continent for which the top populated countries will be retrieved.
-     * @param N         The number of top populated countries to retrieve.
-     * @return A list of all top N populated countries in a continent, or null if there is an error.
+     * @param N The number of top populated countries to retrieve.
+     * @return A list of countries in a continent, or null if there is an error.
      */
-    public ArrayList<CountryReport> getCountriesByContinent(String continent, Integer N) {
-        try {
-            String query = "SELECT ctry.Code, ctry.Name, ctry.Continent, ctry.Region, ctry.Population, cty.Name As Capital "
-                    + "FROM country ctry "
-                    + "LEFT JOIN city cty ON ctry.Capital = cty.ID "
-                    + "WHERE Continent = ? "
-                    + "ORDER BY Population DESC";
+    public ArrayList<CountryReport> getCountriesInContinent(String continent, Integer N) {
+        String query = "SELECT ctry.Code, ctry.Name, ctry.Continent, ctry.Region, ctry.Population, cty.Name As Capital "
+                + "FROM country ctry "
+                + "LEFT JOIN city cty ON ctry.Capital = cty.ID "
+                + "WHERE Continent = ? "
+                + "ORDER BY Population DESC";
 
-            if (N != null) {
-                query += " LIMIT ?";
-            }
+        if (N != null) {
+            query += " LIMIT ?";
+        }
 
-            PreparedStatement prepStmt = getConnection().prepareStatement(query);
+        try(PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
             prepStmt.setString(1, continent);
 
             if (N != null) {
@@ -208,28 +182,37 @@ public class CountryReport extends Report {
     }
 
     // Using method overloading to set a default value of null for N.
-    public ArrayList<CountryReport> getCountriesByContinent(String continent) {
-        return getCountriesByContinent(continent, null);
+    public ArrayList<CountryReport> getCountriesInContinent(String continent) {
+        return getCountriesInContinent(continent, null);
     }
 
     /**
-     * Gets all the countries in a region, organized by population (largest to smallest).
+     * Gets all the countries in a region, organized by population (largest to smallest), or the top N populated countries if N is not null.
+     * @param region The region for which the top populated countries will be retrieved.
+     * @param N      The number of top populated countries to retrieve.
      *
      * @return A list of all countries in a region, or null if there is an error.
      */
-    public ArrayList<CountryReport> getCountriesByRegion(String region) {
-        try {
-            // SQL query to get countries in a region, ordered by population
-            String query = "SELECT ctry.Code, ctry.Name, ctry.Continent, ctry.Region, ctry.Population, cty.Name AS Capital "
-                    + "FROM country ctry, city cty "
-                    + "WHERE ctry.Code = cty.CountryCode "
-                    + "AND ctry.Capital = cty.ID "
-                    + "AND ctry.Region = ? "
-                    + "ORDER BY ctry.Population DESC";
+    public ArrayList<CountryReport> getCountriesInRegion(String region, Integer N) {
+        // SQL query to get countries in a region, ordered by population
+        String query = "SELECT ctry.Code, ctry.Name, ctry.Continent, ctry.Region, ctry.Population, cty.Name AS Capital "
+                + "FROM country ctry, city cty "
+                + "WHERE ctry.Code = cty.CountryCode "
+                + "AND ctry.Capital = cty.ID "
+                + "AND ctry.Region = ? "
+                + "ORDER BY ctry.Population DESC";
 
-            // Prepare the SQL statement with the region parameter
-            PreparedStatement prepStmt = getConnection().prepareStatement(query);
+        if (N != null) {
+            query += " LIMIT ?";
+        }
+
+        // Prepare the SQL statement with the region parameter
+        try(PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
             prepStmt.setString(1, region);
+
+            if (N != null) {
+                prepStmt.setInt(2, N);
+            }
 
             ResultSet rset = prepStmt.executeQuery();
 
@@ -248,45 +231,9 @@ public class CountryReport extends Report {
         }
     }
 
-    /**
-     * Gets the top N populated countries in a region where N is provided by the user.
-     *
-     * @param region The region for which the top populated countries will be retrieved.
-     * @param N      The number of top populated countries to retrieve.
-     * @return A list of all top N populated countries in a region, or an empty list if there is an error.
-     */
-    public ArrayList<CountryReport> getTopCountriesByRegion(String region, int N) {
-        try {
-            // SQL query to get countries in a region, ordered by population
-            String query = "SELECT ctry.Code, ctry.Name, ctry.Continent, ctry.Region, ctry.Population, cty.Name AS Capital "
-                    + "FROM country ctry, city cty "
-                    + "WHERE ctry.Code = cty.CountryCode "
-                    + "AND ctry.Capital = cty.ID "
-                    + "AND ctry.Region = ? "
-                    + "ORDER BY ctry.Population DESC "
-                    + "LIMIT ?";
-
-            // Prepare the SQL statement with the region parameter
-            PreparedStatement prepStmt = getConnection().prepareStatement(query);
-            prepStmt.setString(1, region);
-            prepStmt.setInt(2, N);
-
-            ResultSet rset = prepStmt.executeQuery();
-
-            ArrayList<CountryReport> countries = new ArrayList<>();
-
-            // Loop through the result set and create CountryReport objects
-            while (rset.next()) {
-                countries.add(mapToCountry(rset));
-            }
-            return countries;
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve details.");
-            return null;
-        }
-
+    // Using method overloading to set a default value of null for N.
+    public ArrayList<CountryReport> getCountriesInRegion(String region) {
+        return getCountriesInRegion(region, null);
     }
 }
 
