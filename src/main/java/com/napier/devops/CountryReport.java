@@ -196,10 +196,9 @@ public class CountryReport extends Report {
     public ArrayList<CountryReport> getCountriesInRegion(String region, Integer N) {
         // SQL query to get countries in a region, ordered by population
         String query = "SELECT ctry.Code, ctry.Name, ctry.Continent, ctry.Region, ctry.Population, cty.Name AS Capital "
-                + "FROM country ctry, city cty "
-                + "WHERE ctry.Code = cty.CountryCode "
-                + "AND ctry.Capital = cty.ID "
-                + "AND ctry.Region = ? "
+                + "FROM country ctry "
+                + "LEFT JOIN city cty ON ctry.Capital = cty.ID "
+                + "WHERE ctry.Region = ? "
                 + "ORDER BY ctry.Population DESC";
 
         if (N != null) {
