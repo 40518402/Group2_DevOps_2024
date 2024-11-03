@@ -34,7 +34,7 @@ public class CityReport extends Report {
         this.district = district;
     }
 
-    public void displayCity(ArrayList<CityReport> cities) {
+    public void displayCities(ArrayList<CityReport> cities) {
         // Check countries is not null
         if (cities == null)
         {
@@ -56,15 +56,71 @@ public class CityReport extends Report {
         }
     }
 
+    /**
+     * Converts a result set row into a CityReport object.
+     *
+     * @param rset Holds query result set containing city data.
+     * @return A CityReport instance.
+     * @throws SQLException If SQL error occurs while accessing data.
+     */
     public CityReport mapToCity(ResultSet rset) throws SQLException {
         CityReport city = new CityReport();
-        city.setId(rset.getShort(1));
-        city.setName(rset.getString(2));
-        city.setCountry(rset.getString(3));
-        city.setDistrict(rset.getString(4));
-        city.setPopulation(rset.getLong(5));
+        city.setId(rset.getShort("cty.ID"));
+        city.setName(rset.getString("cty.Name"));
+        city.setCountry(rset.getString("Country"));
+        city.setDistrict(rset.getString("cty.District"));
+        city.setPopulation(rset.getLong("cty.Population"));
 
         return city;
+    }
+
+    /**
+     * Retrieves all the cities in a region in descending order, or the top N populated cities if N is not null.
+     *
+     * @param region The region for which the top populated cities will be retrieved.
+     * @param N The number of top populated cities to retrieve.
+     * @return A list of cities in a region, or null if there is an error.
+     */
+    public ArrayList<CityReport> getCitiesInRegion(String region, Integer N) {
+        // SQL query to get countries in a region, ordered by population
+        String query = "SELECT cty.ID, cty.Name, ctry.Name AS Country, cty.District, cty.Population "
+                + "FROM city cty "
+                + "LEFT JOIN country ctry ON cty.CountryCode = ctry.Code "
+                + "WHERE ctry.Region = ? "
+                + "ORDER BY cty.Population DESC";
+
+        if (N != null) {
+            query += " LIMIT ?";
+        }
+
+        // Prepare the SQL statement with the region parameter
+        try(PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
+            prepStmt.setString(1, region);
+
+            if (N != null) {
+                prepStmt.setInt(2, N);
+            }
+
+            ResultSet rset = prepStmt.executeQuery();
+
+            ArrayList<CityReport> cities = new ArrayList<>();
+
+            // Loop through the result set and create CountryReport objects
+            while (rset.next()) {
+                cities.add(mapToCity(rset));
+            }
+            return cities;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve details.");
+            return null;
+        }
+    }
+
+    // Using method overloading to set a default value of null for N.
+    public ArrayList<CityReport> getCitiesInRegion(String region) {
+        return getCitiesInRegion(region, null);
     }
 
 }
