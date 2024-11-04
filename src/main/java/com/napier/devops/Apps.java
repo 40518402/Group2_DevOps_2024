@@ -10,7 +10,7 @@ public class Apps
 {
     public static void main(String[] args)
     {
-        // Create new CountryReport Object Instance
+        // Create new CityReport Object Instance
         CityReport ctyReport = new CityReport();
 
         // Connect to database

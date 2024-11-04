@@ -82,10 +82,9 @@ public class CityReport extends Report {
      * @return A list of cities in a region, or null if there is an error.
      */
     public ArrayList<CityReport> getCitiesInRegion(String region, Integer N) {
-        // SQL query to get countries in a region, ordered by population
         String query = "SELECT cty.ID, cty.Name, ctry.Name AS Country, cty.District, cty.Population "
                 + "FROM city cty "
-                + "LEFT JOIN country ctry ON cty.CountryCode = ctry.Code "
+                + "JOIN country ctry ON cty.CountryCode = ctry.Code "
                 + "WHERE ctry.Region = ? "
                 + "ORDER BY cty.Population DESC";
 
@@ -93,7 +92,7 @@ public class CityReport extends Report {
             query += " LIMIT ?";
         }
 
-        // Prepare the SQL statement with the region parameter
+        // Prepare the SQL statement
         try(PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
             prepStmt.setString(1, region);
 
@@ -105,7 +104,7 @@ public class CityReport extends Report {
 
             ArrayList<CityReport> cities = new ArrayList<>();
 
-            // Loop through the result set and create CountryReport objects
+            // Loop through the result set
             while (rset.next()) {
                 cities.add(mapToCity(rset));
             }
