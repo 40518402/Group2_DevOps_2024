@@ -20,6 +20,16 @@ public class Apps
             ctyReport.connect(args[0], Integer.parseInt(args[1]));
         }
 
+        // Getting all Capital Cities in the World where N is not provided by the user.
+        ArrayList<CityReport> CapitalCitiesWorldWide = ctyReport.getCapitalCitiesWorldWide();
+        ctyReport.displayCapitalCities(CapitalCitiesWorldWide);
+        System.out.println();
+
+        // Getting the top N populated capital cities in the World where N is provided by the user.
+        ArrayList<CityReport> topCapitalCitiesWorldWide = ctyReport.getCapitalCitiesWorldwide(10);
+        ctyReport.displayCapitalCities(topCapitalCitiesWorldWide);
+        System.out.println();
+
         // Getting the top N populated capital cities in a region where N is provided by the user.
         ArrayList<CityReport> topCapitalCitiesInRegion = ctyReport.getCapitalCitiesInRegion("Central America", 5);
         ctyReport.displayCapitalCities(topCapitalCitiesInRegion);

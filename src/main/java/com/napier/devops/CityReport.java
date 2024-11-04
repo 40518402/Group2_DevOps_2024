@@ -73,6 +73,45 @@ public class CityReport extends Report {
         return city;
     }
 
+    //Retrieves all capital cities in the world in descending order, or top N populated capital cities when prompted by user.
+    public ArrayList<CityReport> getCapitalCitiesWorldwide(Integer N) {
+        String query = "SELECT cty.ID, cty.Name, ctry.Name AS Country, cty.Population "
+                + "FROM city cty "
+                + "JOIN country ctry ON cty.ID = ctry.Capital "
+                + "ORDER BY cty.Population DESC";
+
+        if (N != null) {
+            query += " LIMIT ?";
+        }
+
+        // Prepare the SQL statement
+        try (PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
+            if (N != null) {
+                prepStmt.setInt(1, N);
+            }
+
+            ResultSet rset = prepStmt.executeQuery();
+
+            ArrayList<CityReport> cities = new ArrayList<>();
+
+            // Loop through the result set
+            while (rset.next()) {
+                cities.add(mapToCity(rset));
+            }
+            return cities;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve details.");
+            return null;
+        }
+    }
+
+    // Overloaded method with a default value of null for N once not specified.
+    public ArrayList<CityReport> getCapitalCitiesWorldWide() {
+        return getCapitalCitiesWorldwide(null);
+    }
+
     /**
      * Retrieves all the capital cities in a region in descending order, or the top N populated capital cities if N is not null.
      *
