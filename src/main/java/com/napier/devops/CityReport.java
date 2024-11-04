@@ -122,4 +122,46 @@ public class CityReport extends Report {
         return getCitiesInRegion(region, null);
     }
 
+
+    //Retrieves all the cities in a district in descending order, or the top N populated cities if N is not null.
+    public ArrayList<CityReport> getCitiesInDistrict(String district, Integer N) {
+        String query = "SELECT cty.ID, cty.Name, ctry.Name AS Country, cty.District, cty.Population "
+                + "FROM city cty "
+                + "JOIN country ctry ON cty.CountryCode = ctry.Code "
+                + "WHERE cty.District = ? "
+                + "ORDER BY cty.Population DESC";
+
+        if (N != null) {
+            query += " LIMIT ?";
+        }
+
+        // Prepare the SQL statement
+        try (PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
+            prepStmt.setString(1, district);
+
+            if (N != null) {
+                prepStmt.setInt(2, N);
+            }
+
+            ResultSet rset = prepStmt.executeQuery();
+
+            ArrayList<CityReport> cities = new ArrayList<>();
+
+            // Loop through the result set
+            while (rset.next()) {
+                cities.add(mapToCity(rset));
+            }
+            return cities;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve details.");
+            return null;
+        }
+    }
+    // Method overloading to give N default amount if not specified by the end user.
+    public ArrayList<CityReport> getCitiesInDistrict(String district) {
+        return getCitiesInDistrict(district, null);
+    }
+
 }

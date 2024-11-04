@@ -32,6 +32,16 @@ public class Apps
 
         System.out.println();
 
+        // Getting all populated cities in a district where N is not provided by the user.
+        ArrayList<CityReport> ALLCityDistrict = ctyReport.getCitiesInDistrict("Rio de Janeiro");
+        ctyReport.displayCities(ALLCityDistrict);
+        System.out.println();
+
+        // Getting the top N populated cities in a region where N is provided by the user.
+        ArrayList<CityReport> topNDistrict = ctyReport.getCitiesInDistrict("Rio de Janeiro", 10);
+        ctyReport.displayCities(topNDistrict);
+        System.out.println();
+
         // Disconnect from database
         ctyReport.disconnect();
     }
