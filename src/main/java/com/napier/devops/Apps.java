@@ -40,6 +40,12 @@ public class Apps
         ArrayList<CityReport> capitalCitiesInRegion = ctyReport.getCapitalCitiesInRegion("Central America");
         ctyReport.displayCapitalCities(capitalCitiesInRegion);
 
+        System.out.println();
+
+        // Get all capital cities in a continent ordered by population
+        ArrayList<CityReport> capitalCitiesInContinent = ctyReport.getCapitalCitiesInContinent("Asia", 5);
+        ctyReport.displayCapitalCities(capitalCitiesInContinent);
+
         // Disconnect from database
         ctyReport.disconnect();
     }

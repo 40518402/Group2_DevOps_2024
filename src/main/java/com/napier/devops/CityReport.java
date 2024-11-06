@@ -160,4 +160,44 @@ public class CityReport extends Report {
         return getCapitalCitiesInRegion(region, null);
     }
 
+    /**
+     * Retrieves all the capital cities in a region in descending order, or the top N populated capital cities if N is not null.
+     *
+     * @param continent The region for which the top populated capital cities will be retrieved.
+     * @return A list of capital cities in a region, or null if there is an error.
+     */
+    public ArrayList<CityReport> getCapitalCitiesInContinent(String continent, Integer N) {
+        String query = "SELECT cty.Name AS CityName, ctry.Name AS CountryName, cty.Population "
+                + "FROM city cty "
+                + "JOIN country ctry ON cty.ID = ctry.Capital "
+                + "WHERE ctry.Continent = ? "
+                + "ORDER BY cty.Population DESC";
+
+        if (N != null) { query += " LIMIT ?"; }
+
+        try (PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
+            prepStmt.setString(1, continent);
+
+            if (N != null) {prepStmt.setInt(2, N);}
+
+            ResultSet rset = prepStmt.executeQuery();
+            ArrayList<CityReport> capitalCities = new ArrayList<>();
+
+            while (rset.next()) {
+                CityReport city = new CityReport();
+                city.setName(rset.getString("CityName"));
+                city.setCountry(rset.getString("CountryName"));
+                city.setPopulation(rset.getLong("Population"));
+                capitalCities.add(city);
+            }
+            return capitalCities;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve capital cities in the continent.");
+            return null;
+        }
+    }
+
+
 }
