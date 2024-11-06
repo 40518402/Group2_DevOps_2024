@@ -42,8 +42,14 @@ public class Apps
 
         System.out.println();
 
-        // Get all capital cities in a continent ordered by population
-        ArrayList<CityReport> capitalCitiesInContinent = ctyReport.getCapitalCitiesInContinent("Asia", 5);
+        // Getting the top N populated capital cities in a continent where N is provided by the user.
+        ArrayList<CityReport> topcapitalCitiesInContinent = ctyReport.getCapitalCitiesInContinent("Asia", 5);
+        ctyReport.displayCapitalCities(topcapitalCitiesInContinent);
+
+        System.out.println();
+
+        // Getting all the capital cities in a region organised by largest to smallest.
+        ArrayList<CityReport> capitalCitiesInContinent = ctyReport.getCapitalCitiesInContinent("Asia");
         ctyReport.displayCapitalCities(capitalCitiesInContinent);
 
         // Disconnect from database

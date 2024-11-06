@@ -161,13 +161,13 @@ public class CityReport extends Report {
     }
 
     /**
-     * Retrieves all the capital cities in a region in descending order, or the top N populated capital cities if N is not null.
+     * Retrieves all the capital cities in a continent in descending order, or the top N populated capital cities if N is not null.
      *
      * @param continent The region for which the top populated capital cities will be retrieved.
-     * @return A list of capital cities in a region, or null if there is an error.
+     * @return A list of capital cities in a continent, or null if there is an error.
      */
     public ArrayList<CityReport> getCapitalCitiesInContinent(String continent, Integer N) {
-        String query = "SELECT cty.Name AS CityName, ctry.Name AS CountryName, cty.Population "
+        String query = "SELECT cty.ID, cty.Name, ctry.Name AS Country, cty.Population "
                 + "FROM city cty "
                 + "JOIN country ctry ON cty.ID = ctry.Capital "
                 + "WHERE ctry.Continent = ? "
@@ -181,22 +181,24 @@ public class CityReport extends Report {
             if (N != null) {prepStmt.setInt(2, N);}
 
             ResultSet rset = prepStmt.executeQuery();
-            ArrayList<CityReport> capitalCities = new ArrayList<>();
+            ArrayList<CityReport> cities = new ArrayList<>();
 
+            // Loop through the result set
             while (rset.next()) {
-                CityReport city = new CityReport();
-                city.setName(rset.getString("CityName"));
-                city.setCountry(rset.getString("CountryName"));
-                city.setPopulation(rset.getLong("Population"));
-                capitalCities.add(city);
+                cities.add(mapToCity(rset));
             }
-            return capitalCities;
+            return cities;
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to retrieve capital cities in the continent.");
             return null;
         }
+    }
+
+    // Using method overloading to set a default value of null for N.
+    public ArrayList<CityReport> getCapitalCitiesInContinent(String continent) {
+        return getCapitalCitiesInContinent(continent, null);
     }
 
 
