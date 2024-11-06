@@ -2,6 +2,7 @@ package com.napier.devops;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -34,24 +35,24 @@ public class CityReport extends Report {
         this.district = district;
     }
 
-    public void displayCapitalCities(ArrayList<CityReport> cities) {
+    public void displayCapitalCities(ArrayList<CityReport> capitalCities) {
         // Check capital cities is not null
-        if (cities == null)
+        if (capitalCities == null)
         {
-            System.out.println("No cities found!");
+            System.out.println("No capital cities found!");
             return;
         }
 
         // Print header
         System.out.println(String.format("%-20s %-40s %-15s", "Name", "Country", "Population"));
         // Loop over all cities in the list
-        for (CityReport city : cities) {
-            if (city == null) {
+        for (CityReport capitalCity : capitalCities) {
+            if (capitalCity == null) {
                 continue;
             }
             String city_string =
                     String.format("%-20s %-40s %-15s",
-                            city.getName(), city.getCountry(), city.getPopulation());
+                            capitalCity.getName(), capitalCity.getCountry(), capitalCity.getPopulation());
             System.out.println(city_string);
         }
     }
@@ -68,14 +69,20 @@ public class CityReport extends Report {
         city.setId(rset.getShort("cty.ID"));
         city.setName(rset.getString("cty.Name"));
         city.setCountry(rset.getString("Country"));
+        city.setDistrict(rset.getString("cty.District"));
         city.setPopulation(rset.getLong("cty.Population"));
 
         return city;
     }
 
-    //Retrieves all capital cities in the world in descending order, or top N populated capital cities when prompted by user.
+    /**
+     * Retrieves all capital cities in the world in descending order, or top N populated capital cities when prompted by user.
+     *
+     * @param N The number of top populated capital cities to retrieve.
+     * @return A list of capital cities in a region, or null if there is an error.
+     */
     public ArrayList<CityReport> getCapitalCitiesWorldwide(Integer N) {
-        String query = "SELECT cty.ID, cty.Name, ctry.Name AS Country, cty.Population "
+        String query = "SELECT cty.ID, cty.Name, ctry.Name AS Country, cty.District, cty.Population "
                 + "FROM city cty "
                 + "JOIN country ctry ON cty.ID = ctry.Capital "
                 + "ORDER BY cty.Population DESC";
@@ -92,13 +99,13 @@ public class CityReport extends Report {
 
             ResultSet rset = prepStmt.executeQuery();
 
-            ArrayList<CityReport> cities = new ArrayList<>();
+            ArrayList<CityReport> capitalCities = new ArrayList<>();
 
             // Loop through the result set
             while (rset.next()) {
-                cities.add(mapToCity(rset));
+                capitalCities.add(mapToCity(rset));
             }
-            return cities;
+            return capitalCities;
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -120,7 +127,7 @@ public class CityReport extends Report {
      * @return A list of capital cities in a region, or null if there is an error.
      */
     public ArrayList<CityReport> getCapitalCitiesInRegion(String region, Integer N) {
-        String query = "SELECT cty.ID, cty.Name, ctry.Name AS Country, cty.Population "
+        String query = "SELECT cty.ID, cty.Name, ctry.Name AS Country, cty.District, cty.Population "
                 + "FROM city cty "
                 + "JOIN country ctry ON cty.ID = ctry.Capital "
                 + "WHERE ctry.Region = ? "
@@ -140,13 +147,13 @@ public class CityReport extends Report {
 
             ResultSet rset = prepStmt.executeQuery();
 
-            ArrayList<CityReport> cities = new ArrayList<>();
+            ArrayList<CityReport> capitalCities = new ArrayList<>();
 
             // Loop through the result set
             while (rset.next()) {
-                cities.add(mapToCity(rset));
+                capitalCities.add(mapToCity(rset));
             }
-            return cities;
+            return capitalCities;
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -164,10 +171,11 @@ public class CityReport extends Report {
      * Retrieves all the capital cities in a continent in descending order, or the top N populated capital cities if N is not null.
      *
      * @param continent The region for which the top populated capital cities will be retrieved.
+     * @param N The number of top populated capital cities to retrieve.
      * @return A list of capital cities in a continent, or null if there is an error.
      */
     public ArrayList<CityReport> getCapitalCitiesInContinent(String continent, Integer N) {
-        String query = "SELECT cty.ID, cty.Name, ctry.Name AS Country, cty.Population "
+        String query = "SELECT cty.ID, cty.Name, ctry.Name AS Country, cty.District, cty.Population "
                 + "FROM city cty "
                 + "JOIN country ctry ON cty.ID = ctry.Capital "
                 + "WHERE ctry.Continent = ? "
@@ -181,13 +189,13 @@ public class CityReport extends Report {
             if (N != null) {prepStmt.setInt(2, N);}
 
             ResultSet rset = prepStmt.executeQuery();
-            ArrayList<CityReport> cities = new ArrayList<>();
+            ArrayList<CityReport> capitalCities = new ArrayList<>();
 
             // Loop through the result set
             while (rset.next()) {
-                cities.add(mapToCity(rset));
+                capitalCities.add(mapToCity(rset));
             }
-            return cities;
+            return capitalCities;
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
