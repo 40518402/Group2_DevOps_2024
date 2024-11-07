@@ -21,14 +21,14 @@ public class Apps
         }
 
         // Getting the top N populated cities in a region where N is provided by the user.
-        ArrayList<CityReport> topCities = ctyReport.getCitiesInRegion("Central America", 5);
-        ctyReport.displayCities(topCities);
+        ArrayList<CityReport> topCitiesInRegion = ctyReport.getCitiesInRegion("Central America", 5);
+        ctyReport.displayCities(topCitiesInRegion);
 
         System.out.println();
 
         // Getting all the cities in a region organised by largest population to smallest.
-        ArrayList<CityReport> cities = ctyReport.getCitiesInRegion("Central America");
-        ctyReport.displayCities(cities);
+        ArrayList<CityReport> citiesInRegion = ctyReport.getCitiesInRegion("Central America");
+        ctyReport.displayCities(citiesInRegion);
 
         System.out.println();
 
