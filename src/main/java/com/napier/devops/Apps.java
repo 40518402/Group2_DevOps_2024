@@ -42,6 +42,14 @@ public class Apps
         ctyReport.displayCities(topNDistrict);
         System.out.println();
 
+        // Getting the top N populated cities in a country where N is provided by the user.
+        ArrayList<CityReport> topCitiesInCountry = ctyReport.getCitiesInCountry("Brazil", 5);
+        ctyReport.displayCities(topCitiesInCountry);
+
+        // Getting all populated cities in a country organised by largest population to smallest.
+        ArrayList<CityReport> citiesInCountry = ctyReport.getCitiesInCountry("Brazil");
+        ctyReport.displayCities(citiesInCountry);
+
         // Disconnect from database
         ctyReport.disconnect();
     }

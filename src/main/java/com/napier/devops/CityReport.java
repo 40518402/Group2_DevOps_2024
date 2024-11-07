@@ -75,6 +75,53 @@ public class CityReport extends Report {
     }
 
     /**
+     * Retrieves all cities in a specified country organized by population from largest to smallest.
+     *
+     * @param country The name of the country.
+     * @return A list of cities in the country, ordered by population in descending order.
+     */
+    public ArrayList<CityReport> getCitiesInCountry(String country, Integer N) {
+        try {
+            String query = "SELECT cty.ID, cty.Name, ctry.Name AS Country, cty.District, cty.Population "
+                    + "FROM city cty "
+                    + "JOIN country ctry ON cty.CountryCode = ctry.Code "
+                    + "WHERE ctry.Name = ? "
+                    + "ORDER BY cty.Population DESC";
+
+            if (N != null) {
+                query += " LIMIT ?";
+            }
+
+            PreparedStatement prepStmt = getConnection().prepareStatement(query);
+            prepStmt.setString(1, country);
+
+            if (N != null) {
+                prepStmt.setInt(2, N);
+            }
+
+            ResultSet rset = prepStmt.executeQuery();
+
+            ArrayList<CityReport> cities = new ArrayList<>();
+
+            while (rset.next()) {
+                cities.add(mapToCity(rset));
+            }
+
+            return cities;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve city details.");
+            return null;
+        }
+    }
+
+    // Using method overloading to set a default value of null for N.
+    public ArrayList<CityReport> getCitiesInCountry(String country) {
+        return getCitiesInCountry(country, null);
+    }
+
+    /**
      * Retrieves all the cities in a region in descending order, or the top N populated cities if N is not null.
      *
      * @param region The region for which the top populated cities will be retrieved.
