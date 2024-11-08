@@ -54,7 +54,7 @@ public class CountryReport extends Report {
      */
     public void displayCountries(ArrayList<CountryReport> countries) {
         // Check countries is not null
-        if (countries == null)
+        if (countries == null || countries.isEmpty())
         {
             System.out.println("No countries found!");
             return;

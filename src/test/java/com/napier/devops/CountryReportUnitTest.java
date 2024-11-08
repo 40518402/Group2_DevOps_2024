@@ -18,6 +18,8 @@ public class CountryReportUnitTest
         countryReport = new CountryReport();
     }
 
+
+
     @Test
     void displayCountriesTestNull() {
         countryReport.displayCountries(null);
@@ -39,7 +41,7 @@ public class CountryReportUnitTest
     }
 
     @Test
-    void displayCountriesNormal()
+    void displayCountriesTestNormal()
     {
         ArrayList<CountryReport> countries = new ArrayList<CountryReport>();
         CountryReport country = new CountryReport();
