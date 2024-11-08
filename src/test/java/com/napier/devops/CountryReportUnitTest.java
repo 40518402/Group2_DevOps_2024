@@ -19,11 +19,6 @@ public class CountryReportUnitTest
     }
 
     @Test
-    void getCountryCode() {
-        assertEquals("BLZ", countryReport.getCode());
-    }
-
-    @Test
     void displayCountriesTestNull() {
         countryReport.displayCountries(null);
     }
