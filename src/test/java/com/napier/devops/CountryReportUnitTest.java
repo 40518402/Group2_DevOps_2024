@@ -5,19 +5,26 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-public class CountryReportTest
+import static org.junit.jupiter.api.Assertions.*;
+
+
+public class CountryReportUnitTest
 {
     static CountryReport countryReport;
 
     @BeforeAll
-    static void init()
-    {
+    static void init() {
+
         countryReport = new CountryReport();
     }
 
     @Test
-    void displayCountriesTestNull()
-    {
+    void getCountryCode() {
+        assertEquals("BLZ", countryReport.getCode());
+    }
+
+    @Test
+    void displayCountriesTestNull() {
         countryReport.displayCountries(null);
     }
 
@@ -37,7 +44,7 @@ public class CountryReportTest
     }
 
     @Test
-    void displayCountries()
+    void displayCountriesNormal()
     {
         ArrayList<CountryReport> countries = new ArrayList<CountryReport>();
         CountryReport country = new CountryReport();
