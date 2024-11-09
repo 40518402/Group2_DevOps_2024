@@ -331,6 +331,7 @@ public class CityReport extends Report {
     }
 
     // --------------------------------------- Capital City Query Methods --------------------------------------------------------
+
     /**
      * Retrieves all capital cities in the world in descending order, or top N populated capital cities when prompted by user.
      *
