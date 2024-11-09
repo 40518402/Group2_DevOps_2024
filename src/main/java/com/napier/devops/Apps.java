@@ -52,6 +52,62 @@ public class Apps
         ArrayList<CityReport> capitalCitiesInContinent = ctyReport.getCapitalCitiesInContinent("Asia");
         ctyReport.displayCapitalCities(capitalCitiesInContinent);
 
+        System.out.println();
+
+        // Getting the top N populated cities in the world.
+        ArrayList<CityReport> citiesInWorld = ctyReport.getCitiesInWorld();
+        ctyReport.displayCities(citiesInWorld);
+
+        System.out.println();
+
+        // Getting the top N populated cities in the world where N is provided by the user.
+        ArrayList<CityReport> topCitiesInWorld = ctyReport.getCitiesInWorld(5);
+        ctyReport.displayCities(topCitiesInWorld);
+
+        System.out.println();
+
+        // Getting the top N populated cities in a region where N is provided by the user.
+        ArrayList<CityReport> topCitiesInRegion = ctyReport.getCitiesInRegion("Central America", 5);
+        ctyReport.displayCities(topCitiesInRegion);
+
+        System.out.println();
+
+        // Getting all the cities in a region organised by largest population to smallest.
+        ArrayList<CityReport> citiesInRegion = ctyReport.getCitiesInRegion("Central America");
+        ctyReport.displayCities(citiesInRegion);
+
+        System.out.println();
+
+        // Getting all populated cities in a district where N is not provided by the user.
+        ArrayList<CityReport> ALLCityDistrict = ctyReport.getCitiesInDistrict("Rio de Janeiro");
+        ctyReport.displayCities(ALLCityDistrict);
+        System.out.println();
+
+        // Getting the top N populated cities in a region where N is provided by the user.
+        ArrayList<CityReport> topNDistrict = ctyReport.getCitiesInDistrict("Rio de Janeiro", 10);
+        ctyReport.displayCities(topNDistrict);
+        System.out.println();
+
+        // Getting the top N populated cities in a country where N is provided by the user.
+        ArrayList<CityReport> topCitiesInCountry = ctyReport.getCitiesInCountry("Brazil", 5);
+        ctyReport.displayCities(topCitiesInCountry);
+
+        // Getting all populated cities in a country organised by largest population to smallest.
+        ArrayList<CityReport> citiesInCountry = ctyReport.getCitiesInCountry("Brazil");
+        ctyReport.displayCities(citiesInCountry);
+
+        System.out.println();
+
+        // Getting all populated cities in a continent  organised by largest population to smallest.
+        ArrayList<CityReport> AllCityContinent = ctyReport.getCitiesInContinent("Asia");
+        ctyReport.displayCities(AllCityContinent);
+
+        System.out.println("\nWith A Limit of 5");
+
+        // Getting all populated cities in a continent  organised by largest population to smallest where there is a limit N.
+        ArrayList<CityReport> TopNContinent = ctyReport.getCitiesInContinent("Asia", 5);
+        ctyReport.displayCities(TopNContinent);
+
         // Disconnect from database
         ctyReport.disconnect();
     }

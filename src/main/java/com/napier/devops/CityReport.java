@@ -96,6 +96,8 @@ public class CityReport extends Report {
         return city;
     }
 
+    // --------------------------------------- City Query Methods --------------------------------------------------------
+
     /**
      * Retrieves all cities in the world organized by population from largest to smallest.
      *
@@ -328,6 +330,7 @@ public class CityReport extends Report {
         return getCitiesInContinent(continent, null);
     }
 
+    // --------------------------------------- Capital City Query Methods --------------------------------------------------------
     /**
      * Retrieves all capital cities in the world in descending order, or top N populated capital cities when prompted by user.
      *
