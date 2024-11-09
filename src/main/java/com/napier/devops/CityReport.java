@@ -114,7 +114,7 @@ public class CityReport extends Report {
             query += " LIMIT ?";
         }
 
-        try(PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
+        try(PreparedStatement prepStmt = getDatabaseConnection().prepareStatement(query)) {
 
             if (N != null) {
                 prepStmt.setInt(1, N);
@@ -160,7 +160,7 @@ public class CityReport extends Report {
             query += " LIMIT ?";
         }
 
-        try(PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
+        try(PreparedStatement prepStmt = getDatabaseConnection().prepareStatement(query)) {
             prepStmt.setString(1, country);
 
             if (N != null) {
@@ -208,7 +208,7 @@ public class CityReport extends Report {
         }
 
         // Prepare the SQL statement
-        try(PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
+        try(PreparedStatement prepStmt = getDatabaseConnection().prepareStatement(query)) {
             prepStmt.setString(1, region);
 
             if (N != null) {
@@ -256,7 +256,7 @@ public class CityReport extends Report {
         }
 
         // Prepare the SQL statement
-        try (PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
+        try (PreparedStatement prepStmt = getDatabaseConnection().prepareStatement(query)) {
             prepStmt.setString(1, district);
 
             if (N != null) {
@@ -301,7 +301,7 @@ public class CityReport extends Report {
             query += " LIMIT ?";
         }
 
-        try(PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
+        try(PreparedStatement prepStmt = getDatabaseConnection().prepareStatement(query)) {
             prepStmt.setString(1, continent);
 
             if (N != null) {
@@ -349,7 +349,7 @@ public class CityReport extends Report {
         }
 
         // Prepare the SQL statement
-        try (PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
+        try (PreparedStatement prepStmt = getDatabaseConnection().prepareStatement(query)) {
             if (N != null) {
                 prepStmt.setInt(1, N);
             }
@@ -395,7 +395,7 @@ public class CityReport extends Report {
         }
 
         // Prepare the SQL statement
-        try(PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
+        try(PreparedStatement prepStmt = getDatabaseConnection().prepareStatement(query)) {
             prepStmt.setString(1, region);
 
             if (N != null) {
@@ -440,7 +440,7 @@ public class CityReport extends Report {
 
         if (N != null) { query += " LIMIT ?"; }
 
-        try (PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
+        try (PreparedStatement prepStmt = getDatabaseConnection().prepareStatement(query)) {
             prepStmt.setString(1, continent);
 
             if (N != null) {prepStmt.setInt(2, N);}

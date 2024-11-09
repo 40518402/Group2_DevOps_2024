@@ -112,7 +112,7 @@ public class CountryReport extends Report {
         }
 
         // Prepare the SQL statement
-        try(PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
+        try(PreparedStatement prepStmt = getDatabaseConnection().prepareStatement(query)) {
 
             if (N != null) {
                 prepStmt.setInt(1, N);
@@ -158,7 +158,7 @@ public class CountryReport extends Report {
             query += " LIMIT ?";
         }
 
-        try(PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
+        try(PreparedStatement prepStmt = getDatabaseConnection().prepareStatement(query)) {
             prepStmt.setString(1, continent);
 
             if (N != null) {
@@ -206,7 +206,7 @@ public class CountryReport extends Report {
         }
 
         // Prepare the SQL statement with the region parameter
-        try(PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
+        try(PreparedStatement prepStmt = getDatabaseConnection().prepareStatement(query)) {
             prepStmt.setString(1, region);
 
             if (N != null) {

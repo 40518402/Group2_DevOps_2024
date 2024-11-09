@@ -32,7 +32,7 @@ abstract public class Report {
         this.population = population;
     }
 
-    protected  Connection getConnection(){
+    protected  Connection getDatabaseConnection(){
         return con;
     }
 
