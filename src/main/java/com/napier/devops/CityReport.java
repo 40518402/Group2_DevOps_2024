@@ -36,7 +36,7 @@ public class CityReport extends Report {
 
     public void displayCities(ArrayList<CityReport> cities) {
         // Check countries is not null
-        if (cities == null)
+        if (cities == null || cities.isEmpty())
         {
             System.out.println("No cities found!");
             return;
@@ -58,7 +58,7 @@ public class CityReport extends Report {
 
     public void displayCapitalCities(ArrayList<CityReport> capitalCities) {
         // Check capital cities is not null
-        if (capitalCities == null)
+        if (capitalCities == null || capitalCities.isEmpty())
         {
             System.out.println("No capital cities found!");
             return;
