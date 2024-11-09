@@ -17,6 +17,8 @@ public class CityReportIntegrationTest {
         cityReport = new CityReport();
         cityReport.connect("localhost:33060", 30000);
 
+        assertNotNull(cityReport.getDatabaseConnection());
+
     }
 
     @AfterAll
