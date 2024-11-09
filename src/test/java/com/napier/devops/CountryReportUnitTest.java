@@ -18,8 +18,6 @@ public class CountryReportUnitTest
         countryReport = new CountryReport();
     }
 
-
-
     @Test
     void displayCountriesTestNull() {
         countryReport.displayCountries(null);
