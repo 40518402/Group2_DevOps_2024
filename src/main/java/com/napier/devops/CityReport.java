@@ -75,6 +75,50 @@ public class CityReport extends Report {
     }
 
     /**
+     * Retrieves all cities in the world organized by population from largest to smallest.
+     *
+     * @param N The number of top populated cities to retrieve.
+     * @return A list of cities in the world, ordered by population in descending order.
+     */
+    public ArrayList<CityReport> getCitiesInWorld(Integer N) {
+        String query = "SELECT cty.ID, cty.Name, ctry.Name AS Country, cty.District, cty.Population "
+                + "FROM city cty "
+                + "JOIN country ctry ON cty.CountryCode = ctry.Code "
+                + "ORDER BY cty.Population DESC";
+
+        if (N != null) {
+            query += " LIMIT ?";
+        }
+
+        try(PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
+
+            if (N != null) {
+                prepStmt.setInt(1, N);
+            }
+
+            ResultSet rset = prepStmt.executeQuery();
+
+            ArrayList<CityReport> cities = new ArrayList<>();
+
+            while (rset.next()) {
+                cities.add(mapToCity(rset));
+            }
+
+            return cities;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve city details.");
+            return null;
+        }
+    }
+
+    // Using method overloading to set a default value of null for N.
+    public ArrayList<CityReport> getCitiesInWorld() {
+        return getCitiesInWorld(null);
+    }
+
+    /**
      * Retrieves all cities in a specified country organized by population from largest to smallest.
      *
      * @param country The name of the country.

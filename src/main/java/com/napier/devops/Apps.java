@@ -20,6 +20,18 @@ public class Apps
             ctyReport.connect(args[0], Integer.parseInt(args[1]));
         }
 
+        // Getting the top N populated cities in the world.
+        ArrayList<CityReport> citiesInWorld = ctyReport.getCitiesInWorld();
+        ctyReport.displayCities(citiesInWorld);
+
+        System.out.println();
+
+        // Getting the top N populated cities in the world where N is provided by the user.
+        ArrayList<CityReport> topCitiesInWorld = ctyReport.getCitiesInWorld(5);
+        ctyReport.displayCities(topCitiesInWorld);
+
+        System.out.println();
+
         // Getting the top N populated cities in a region where N is provided by the user.
         ArrayList<CityReport> topCitiesInRegion = ctyReport.getCitiesInRegion("Central America", 5);
         ctyReport.displayCities(topCitiesInRegion);
