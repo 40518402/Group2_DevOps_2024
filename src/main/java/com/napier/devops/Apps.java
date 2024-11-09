@@ -50,6 +50,19 @@ public class Apps
         ArrayList<CityReport> citiesInCountry = ctyReport.getCitiesInCountry("Brazil");
         ctyReport.displayCities(citiesInCountry);
 
+        System.out.println();
+
+        // Getting all populated cities in a continent  organised by largest population to smallest.
+        ArrayList<CityReport> AllCityContinent = ctyReport.getCitiesInContinent("Asia");
+        ctyReport.displayCities(AllCityContinent);
+
+        System.out.println("\nWith A Limit of 5");
+
+        // Getting all populated cities in a continent  organised by largest population to smallest where there is a limit N.
+        ArrayList<CityReport> TopNContinent = ctyReport.getCitiesInContinent("Asia", 5);
+        ctyReport.displayCities(TopNContinent);
+
+
         // Disconnect from database
         ctyReport.disconnect();
     }

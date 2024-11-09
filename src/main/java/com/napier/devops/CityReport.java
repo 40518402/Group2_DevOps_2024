@@ -216,4 +216,50 @@ public class CityReport extends Report {
         return getCitiesInDistrict(district, null);
     }
 
+    /**
+     * Retrieves all cities in a specified country organized by population from largest to smallest.
+     *
+     * @param continent The name of the country.
+     * @return A list of cities in the continent, ordered by population in descending order.
+     */
+    public ArrayList<CityReport> getCitiesInContinent(String continent, Integer N) {
+        String query = "SELECT cty.ID, cty.Name, ctry.Name AS Country, cty.District, cty.Population "
+                + "FROM city cty "
+                + "JOIN country ctry ON cty.CountryCode = ctry.Code "
+                + "WHERE ctry.Continent = ? "
+                + "ORDER BY cty.Population DESC";
+
+        if (N != null) {
+            query += " LIMIT ?";
+        }
+
+        try(PreparedStatement prepStmt = getConnection().prepareStatement(query)) {
+            prepStmt.setString(1, continent);
+
+            if (N != null) {
+                prepStmt.setInt(2, N);
+            }
+
+            ResultSet rset = prepStmt.executeQuery();
+
+            ArrayList<CityReport> cities = new ArrayList<>();
+
+            while (rset.next()) {
+                cities.add(mapToCity(rset));
+            }
+
+            return cities;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve city details.");
+            return null;
+        }
+    }
+
+    // Method overloading to give N default amount if not specified by the end user.
+    public ArrayList<CityReport> getCitiesInContinent(String continent) {
+        return getCitiesInContinent(continent, null);
+    }
+
 }
