@@ -66,15 +66,15 @@ public class CityReport extends Report {
 
         // Print header
         System.out.println(String.format("%-20s %-40s %-15s", "Name", "Country", "Population"));
-        // Loop over all cities in the list
+        // Loop over all capital cities in the list
         for (CityReport capitalCity : capitalCities) {
             if (capitalCity == null) {
                 continue;
             }
-            String city_string =
+            String capital_city_string =
                     String.format("%-20s %-40s %-15s",
                             capitalCity.getName(), capitalCity.getCountry(), capitalCity.getPopulation());
-            System.out.println(city_string);
+            System.out.println(capital_city_string);
         }
     }
 
