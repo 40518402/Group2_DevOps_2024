@@ -52,17 +52,24 @@ classDiagram
     }
 
     class PopulationReport{
-        -inCityPopulation : int
-        -notInCityPoupulation : int
-        +getInCityPopulation() int
-        +getNotInCityPopulation() int
-        +setInCityPopulation(inCityPopulation) void
-        +setNotInCityPopulation(notInCityPopulation) void
+        -urbanPopulation : int
+        -ruralPoupulation : int
+        -urbanPopulationPercentage : float
+        -ruralPopulationPercentage : float
+        +getUrbanPopulation() int
+        +getRuralPopulation() int
+        +getUrbanPopulationPercentage() float
+        +getRuralPopulationPercentage() float
+        +setUrbanPopulation(urbanPopulation) void
+        +setruralPopulation(ruralPopulation) void
+        +setUrbanPopulationPercentage(urbanPopulationPercentage) void
+        +setruralPopulationPercentage(ruralPopulationPercentage) void
         +mapToPopulation(rset) void
-        +getPopulationByContinent() ArrayList
-        +getPopulationByRegion() ArrayList
-        +getPopulationByCountry() ArrayList
-
+        +getPopulationInEachContinent() ArrayList
+        +getPopulationInEachRegion() ArrayList
+        +getPopulationInEachCountry() ArrayList
+        +getTotalPopulation() ArrayList
+        +getTotalPopulationForLanguageSpeakers() ArrayList
     }
 
     Report <|-- CountryReport
