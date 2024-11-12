@@ -1,7 +1,5 @@
 package com.napier.devops;
 
-import java.util.ArrayList;
-
 /**
  * This class serves as the entry point for the application and generates the various reports
  * for the user.
@@ -11,48 +9,40 @@ public class Apps
     public static void main(String[] args)
     {
         // Create new CityReport Object Instance
-        CityReport ctyReport = new CityReport();
+        PopulationReport popReport = new PopulationReport();
 
         // Connect to database
         if(args.length < 1){
-            ctyReport.connect("localhost:33060", 30000);
+            popReport.connect("localhost:33060", 30000);
         }else{
-            ctyReport.connect(args[0], Integer.parseInt(args[1]));
+            popReport.connect(args[0], Integer.parseInt(args[1]));
         }
 
-        // Getting all Capital Cities in the World where N is not provided by the user.
-        ArrayList<CityReport> CapitalCitiesWorldWide = ctyReport.getCapitalCitiesWorldWide();
-        ctyReport.displayCapitalCities(CapitalCitiesWorldWide);
-        System.out.println();
+        // The population of the world.
+        PopulationReport worldPopulation = popReport.getTotalPopulationOfTheWorld();
+        System.out.println(worldPopulation.toString());
 
-        // Getting the top N populated capital cities in the World where N is provided by the user.
-        ArrayList<CityReport> topCapitalCitiesWorldWide = ctyReport.getCapitalCitiesWorldwide(10);
-        ctyReport.displayCapitalCities(topCapitalCitiesWorldWide);
-        System.out.println();
+        // The population of a continent.
+        PopulationReport continentPopulation = popReport.getTotalPopulationForLocation(GeographicLevel.CONTINENT, "North America");
+        System.out.println(continentPopulation.toString());
 
-        // Getting the top N populated capital cities in a region where N is provided by the user.
-        ArrayList<CityReport> topCapitalCitiesInRegion = ctyReport.getCapitalCitiesInRegion("Central America", 5);
-        ctyReport.displayCapitalCities(topCapitalCitiesInRegion);
+        // The population of a region.
+        PopulationReport regionPopulation = popReport.getTotalPopulationForLocation(GeographicLevel.REGION, "Caribbean");
+        System.out.println(regionPopulation.toString());
 
-        System.out.println();
+        // The population of a country.
+        PopulationReport countryPopulation = popReport.getTotalPopulationForLocation(GeographicLevel.COUNTRY, "Belize");
+        System.out.println(countryPopulation.toString());
 
-        // Getting all the capital cities in a region organised by largest to smallest.
-        ArrayList<CityReport> capitalCitiesInRegion = ctyReport.getCapitalCitiesInRegion("Central America");
-        ctyReport.displayCapitalCities(capitalCitiesInRegion);
+        // The population of a district.
+        PopulationReport districtPopulation = popReport.getTotalPopulationForLocation(GeographicLevel.DISTRICT, "Ontario");
+        System.out.println(districtPopulation.toString());
 
-        System.out.println();
-
-        // Getting the top N populated capital cities in a continent where N is provided by the user.
-        ArrayList<CityReport> topcapitalCitiesInContinent = ctyReport.getCapitalCitiesInContinent("Asia", 5);
-        ctyReport.displayCapitalCities(topcapitalCitiesInContinent);
-
-        System.out.println();
-
-        // Getting all the capital cities in a region organised by largest to smallest.
-        ArrayList<CityReport> capitalCitiesInContinent = ctyReport.getCapitalCitiesInContinent("Asia");
-        ctyReport.displayCapitalCities(capitalCitiesInContinent);
+        // The population of a city.
+        PopulationReport cityPopulation = popReport.getTotalPopulationForLocation(GeographicLevel.CITY, "Belmopan");
+        System.out.println(cityPopulation.toString());
 
         // Disconnect from database
-        ctyReport.disconnect();
+        popReport.disconnect();
     }
 }
