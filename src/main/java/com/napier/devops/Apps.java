@@ -1,5 +1,7 @@
 package com.napier.devops;
 
+import java.util.ArrayList;
+
 /**
  * This class serves as the entry point for the application and generates the various reports
  * for the user.
@@ -13,7 +15,7 @@ public class Apps
 
         // Connect to database
         if(args.length < 1){
-            popReport.connect("localhost:33060", 30000);
+            popReport.connect("localhost:33060", 0);
         }else{
             popReport.connect(args[0], Integer.parseInt(args[1]));
         }
@@ -41,6 +43,10 @@ public class Apps
         // The population of a city.
         PopulationReport cityPopulation = popReport.getTotalPopulationForLocation(GeographicLevel.CITY, "Belmopan");
         System.out.println(cityPopulation.toString());
+
+        // The population of people, people living in cities, and people not living in cities in each country.
+        ArrayList<PopulationReport> eachCountryPopulation = popReport.getPopulationDataByCountry();
+        popReport.displayPopulations(eachCountryPopulation);
 
         // Disconnect from database
         popReport.disconnect();

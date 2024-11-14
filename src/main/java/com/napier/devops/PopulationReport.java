@@ -77,7 +77,7 @@ public class PopulationReport extends Report {
      * @return A PopulationReport instance.
      * @throws SQLException If SQL error occurs while accessing data.
      */
-    public PopulationReport mapToPopulation(ResultSet rset) throws SQLException {
+    public PopulationReport mapToPopulationReport(ResultSet rset) throws SQLException {
         PopulationReport population = new PopulationReport();
         population.setName(rset.getString(1));
         population.setPopulation(rset.getLong(2));
@@ -87,6 +87,43 @@ public class PopulationReport extends Report {
         population.setRuralPopulationPercentage(rset.getFloat(6));
 
         return population;
+    }
+
+    /**
+     * Retrieves the population data for each country, including city and non-city populations.
+     *
+     * @return A list of population data for each country.
+     */
+    public ArrayList<PopulationReport> getPopulationDataByCountry() {
+        try {
+            String query = "SELECT co.Name AS Country, "
+                    + "co.Population AS TotalPopulation, "
+                    + "SUM(ci.Population) AS CityPopulation, "
+                    + "ROUND(((SUM(ci.Population) * 100) / co.Population),2) AS CityPercentage, "
+                    + "(co.Population - SUM(ci.Population)) AS Rural_Population, "
+                    + "ROUND((((co.Population - SUM(ci.Population)) * 100) / co.Population),2) AS RuralPopulation "
+                    + "FROM country co "
+                    + "LEFT JOIN city ci ON co.Code = ci.CountryCode "
+                    + "GROUP BY co.Code, co.Name "
+                    + "ORDER BY co.Population DESC";
+
+            PreparedStatement prepStmt = getDatabaseConnection().prepareStatement(query);
+
+            ResultSet rset = prepStmt.executeQuery();
+
+            ArrayList<PopulationReport> populationReports = new ArrayList<>();
+
+            while (rset.next()) {
+                populationReports.add(mapToPopulationReport(rset));
+            }
+
+            return populationReports;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve population details.");
+            return null;
+        }
     }
 
     /**
