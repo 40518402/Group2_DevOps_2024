@@ -15,7 +15,7 @@ public class Apps
 
         // Connect to database
         if(args.length < 1){
-            popReport.connect("localhost:33060", 0);
+            popReport.connect("localhost:33060", 30000);
         }else{
             popReport.connect(args[0], Integer.parseInt(args[1]));
         }
@@ -43,6 +43,8 @@ public class Apps
         // The population of a city.
         PopulationReport cityPopulation = popReport.getTotalPopulationForLocation(GeographicLevel.CITY, "Belmopan");
         System.out.println(cityPopulation.toString());
+
+        System.out.println();
 
         // The population of people, people living in cities, and people not living in cities in each country.
         ArrayList<PopulationReport> eachCountryPopulation = popReport.getPopulationDataByCountry();

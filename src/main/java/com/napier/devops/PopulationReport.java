@@ -95,19 +95,17 @@ public class PopulationReport extends Report {
      * @return A list of population data for each country.
      */
     public ArrayList<PopulationReport> getPopulationDataByCountry() {
-        try {
-            String query = "SELECT co.Name AS Country, "
-                    + "co.Population AS TotalPopulation, "
-                    + "SUM(ci.Population) AS CityPopulation, "
-                    + "ROUND(((SUM(ci.Population) * 100) / co.Population),2) AS CityPercentage, "
-                    + "(co.Population - SUM(ci.Population)) AS Rural_Population, "
-                    + "ROUND((((co.Population - SUM(ci.Population)) * 100) / co.Population),2) AS RuralPopulation "
-                    + "FROM country co "
-                    + "LEFT JOIN city ci ON co.Code = ci.CountryCode "
-                    + "GROUP BY co.Code, co.Name "
-                    + "ORDER BY co.Population DESC";
+        String query = "SELECT co.Name AS Country, "
+                + "co.Population AS TotalPopulation, "
+                + "SUM(ci.Population) AS CityPopulation, "
+                + "ROUND(((SUM(ci.Population) * 100) / co.Population),2) AS CityPercentage, "
+                + "(co.Population - SUM(ci.Population)) AS Rural_Population, "
+                + "ROUND((((co.Population - SUM(ci.Population)) * 100) / co.Population),2) AS RuralPopulation "
+                + "FROM country co "
+                + "LEFT JOIN city ci ON co.Code = ci.CountryCode "
+                + "GROUP BY co.Code, co.Name ";
 
-            PreparedStatement prepStmt = getDatabaseConnection().prepareStatement(query);
+        try(PreparedStatement prepStmt = getDatabaseConnection().prepareStatement(query)) {
 
             ResultSet rset = prepStmt.executeQuery();
 
