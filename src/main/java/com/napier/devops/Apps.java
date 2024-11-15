@@ -52,5 +52,10 @@ public class Apps
 
         // Disconnect from database
         popReport.disconnect();
+
+        LanguageReport languageReport = new LanguageReport();
+        ArrayList<LanguageReport> languageData = languageReport.getLanguageSpeakersData();
+        languageReport.displayLanguages(languageData);
+
     }
 }
