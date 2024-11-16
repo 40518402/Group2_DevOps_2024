@@ -10,6 +10,10 @@ import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+/**
+ * Represents a population report in the system.
+ * This class stores report information such as name, total population, urban population, rural population and their respective percentages.
+ */
 public class PopulationReport extends Report {
     private long urbanPopulation;
     private long ruralPopulation;
@@ -102,7 +106,7 @@ public class PopulationReport extends Report {
     public void outputPopulationReports(ArrayList<PopulationReport> populations, String filename) {
         // Check populations is null
         if (populations == null || populations.isEmpty()) {
-            System.out.println("No cities to output!");
+            System.out.println("No population data to output!");
             return;
         }
 
@@ -120,6 +124,36 @@ public class PopulationReport extends Report {
                     + NumberFormat.getInstance().format(population.getRuralPopulation()) + " | "
                     + population.getRuralPopulationPercentage() + "%" + " |\r\n");
         }
+        try {
+            new File("./reports/").mkdir();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("./reports/" + filename)));
+            writer.write(sb.toString());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Uses method overloading to output single row queries to markdown.
+     *
+     * @param populationData Holds population data to output for a single PopulationReport object instance.
+     * @param filename The name of the file.
+     */
+    public void outputPopulationReports(PopulationReport populationData, String filename) {
+        // Check populations is null
+        if (populationData == null) {
+            System.out.println("No population data to output!");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        // Print header
+        sb.append("| Name | Total Population |\r\n");
+        sb.append("| --- | --- |\r\n");
+        sb.append("| " + populationData.getName() + " | "
+                + NumberFormat.getInstance().format(populationData.getPopulation()) + " |\r\n");
+
         try {
             new File("./reports/").mkdir();
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File("./reports/" + filename)));
@@ -167,6 +201,7 @@ public class PopulationReport extends Report {
 
     /**
      * Gets the population of the world.
+     *
      * @return A PopulationReport object containing the total population of the world.
      */
     public PopulationReport getTotalPopulationOfTheWorld() {
@@ -194,6 +229,7 @@ public class PopulationReport extends Report {
 
     /**
      * Gets the population of a continent, region, country, district or city.
+     *
      * @param level An enum instance that determines the geographical level being queried.
      * @param location The name of the location.
      * @return A PopulationReport object containing the name and total population of a continent, region, country, district or city.
@@ -238,10 +274,24 @@ public class PopulationReport extends Report {
         }
     }
 
+    /**
+     *
+     * @return PopulationReport object instance as a string.
+     */
     @Override
     public String toString() {
-        return String.format("%s - %s",
-                getName(),
-                NumberFormat.getInstance().format(getPopulation()));
+        if (getUrbanPopulation() == 0 && getUrbanPopulationPercentage() == 0 && getRuralPopulation() == 0 && getRuralPopulationPercentage() == 0) {
+            return String.format("Population Report(%s - %s)",
+                    getName(),
+                    NumberFormat.getInstance().format(getPopulation()));
+        } else {
+            return String.format("Population Report(%s - %s - %s - %.2f%% - %s - %.2f%%)",
+                    getName(),
+                    NumberFormat.getInstance().format(getPopulation()),
+                    NumberFormat.getInstance().format(getUrbanPopulation()),
+                    getUrbanPopulationPercentage(),
+                    NumberFormat.getInstance().format(getRuralPopulation()),
+                    getRuralPopulationPercentage());
+        }
     }
 }

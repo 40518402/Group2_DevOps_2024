@@ -10,6 +10,10 @@ import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+/**
+ * Represents a language report in the system.
+ * This class stores report information such as language, total speakers and world percentage.
+ */
 public class LanguageReport extends Report {
     private String language;
     private long totalSpeakers;

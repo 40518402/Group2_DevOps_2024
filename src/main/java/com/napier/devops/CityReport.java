@@ -10,6 +10,10 @@ import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+/**
+ * Represents a city report in the system.
+ * This class stores report information such as id, name, country, district and population.
+ */
 public class CityReport extends Report {
     short id;
     String country;
@@ -43,7 +47,7 @@ public class CityReport extends Report {
      * Prints a list of cities.
      *
      * @param cities The list of countries to print.
-     * @param isCapital Changes console output if list consists of capital cities or not.
+     * @param isCapital Changes console output if list consists of only capital cities.
      */
     public void displayCities(ArrayList<CityReport> cities, boolean isCapital) {
         // Check countries is not null
@@ -94,7 +98,7 @@ public class CityReport extends Report {
      *
      * @param cities The list of cities to output.
      * @param filename The name of the outputted file.
-     * @param isCapital Changes table output if list consists of capital cities or not.
+     * @param isCapital Changes table output if list consists of only capital cities.
      */
     public void outputCityReports(ArrayList<CityReport> cities, String filename, boolean isCapital) {
         // Check cities is null

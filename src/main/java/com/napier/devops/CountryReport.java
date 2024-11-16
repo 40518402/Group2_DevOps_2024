@@ -11,8 +11,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 
 /**
- * Represents a country report in the system
- * This class stores report information such as code, name, continent, region, population and capital
+ * Represents a country report in the system.
+ * This class stores report information such as code, name, continent, region, population and capital.
  */
 public class CountryReport extends Report {
     private String code;
@@ -137,7 +137,6 @@ public class CountryReport extends Report {
      * Gets all the countries in the world, organized by population (largest to smallest), or the top N populated countries if N is not null.
      *
      * @param N The number of top populated countries to retrieve.
-     *
      * @return A list of all countries in the world, or null if there is an error.
      */
     public ArrayList<CountryReport> getCountriesInWorld(Integer N) {
