@@ -1,5 +1,9 @@
 package com.napier.devops;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -74,6 +78,40 @@ public class LanguageReport extends Report {
         languageReport.setTotalSpeakers(rset.getLong("Total_Speakers"));
         languageReport.setWorldPercentage(rset.getFloat("World_Percentage"));
         return languageReport;
+    }
+
+    /**
+     * Outputs to Markdown
+     *
+     * @param languages The list of languages to output.
+     * @param filename The name of the outputted file.
+     */
+    public void outputLanguageReports(ArrayList<LanguageReport> languages, String filename) {
+        // Check if languages is null
+        if (languages == null || languages.isEmpty()) {
+            System.out.println("No languages to output!");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        // Print header
+        sb.append("| Language | Total Speakers | World Percentage |\r\n");
+        sb.append("| --- | --- | --- |\r\n");
+        // Loop over all languages in the list
+        for (LanguageReport language : languages) {
+            if (language == null) continue;
+            sb.append("| " + language.getLanguage() + " | "
+                    + NumberFormat.getInstance().format(language.getTotalSpeakers()) + " | "
+                    + language.getWorldPercentage() + "%" + " |\r\n");
+        }
+        try {
+            new File("./reports/").mkdir();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("./reports/" + filename)));
+            writer.write(sb.toString());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

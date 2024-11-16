@@ -3,7 +3,12 @@ package com.napier.devops;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.IOException;
 
 /**
  * Represents a country report in the system
@@ -71,6 +76,41 @@ public class CountryReport extends Report {
                     String.format("%-5s %-48s %-15s %-28s %20s %10s",
                             country.getCode(), country.getName(), country.getContinent(), country.getRegion(), country.getPopulation(), country.getCapital() != null ? country.getCapital() : "N/A");
             System.out.println(country_string);
+        }
+    }
+
+    /**
+     * Outputs to Markdown
+     *
+     * @param countries The list of countries to output.
+     * @param filename The name of the outputted file.
+     */
+    public void outputCountryReports(ArrayList<CountryReport> countries, String filename) {
+        // Check countries is null
+        if (countries == null || countries.isEmpty()) {
+            System.out.println("No countries to output!");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        // Print header
+        sb.append("| Code | Country | Continent | Region | Population | Capital |\r\n");
+        sb.append("| --- | --- | --- | --- | --- | --- |\r\n");
+        // Loop over all countries in the list
+        for (CountryReport country : countries) {
+            if (country == null) continue;
+            sb.append("| " + country.getCode() + " | " +
+                    country.getName() + " | " + country.getContinent() + " | " +
+                    country.getRegion() + " | " + NumberFormat.getInstance().format(country.getPopulation()) + " | "
+                    + country.getCapital() + " |\r\n");
+        }
+        try {
+            new File("./reports/").mkdir();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("./reports/" + filename)));
+            writer.write(sb.toString());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

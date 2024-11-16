@@ -1,5 +1,9 @@
 package com.napier.devops;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -90,6 +94,43 @@ public class PopulationReport extends Report {
     }
 
     /**
+     * Outputs to Markdown
+     *
+     * @param populations The list of population data to output.
+     * @param filename The name of the outputted file.
+     */
+    public void outputPopulationReports(ArrayList<PopulationReport> populations, String filename) {
+        // Check populations is null
+        if (populations == null || populations.isEmpty()) {
+            System.out.println("No cities to output!");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        // Print header
+        sb.append("| Name | Total Population | Urban Population | Urban Percentage | Rural Population | Rural Percentage |\r\n");
+        sb.append("| --- | --- | --- | --- | --- | --- |\r\n");
+        // Loop over all population data in the list
+        for (PopulationReport population : populations) {
+            if (population == null) continue;
+            sb.append("| " + population.getName() + " | "
+                    + NumberFormat.getInstance().format(population.getPopulation()) + " | "
+                    + NumberFormat.getInstance().format(population.getUrbanPopulation()) + " | "
+                    + population.getUrbanPopulationPercentage() + "%" + " | "
+                    + NumberFormat.getInstance().format(population.getRuralPopulation()) + " | "
+                    + population.getRuralPopulationPercentage() + "%" + " |\r\n");
+        }
+        try {
+            new File("./reports/").mkdir();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("./reports/" + filename)));
+            writer.write(sb.toString());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Retrieves the population data for each country, including city and non-city populations.
      *
      * @return A list of population data for each country.
@@ -134,13 +175,14 @@ public class PopulationReport extends Report {
         try(PreparedStatement prepStmt = getDatabaseConnection().prepareStatement(query)) {
             ResultSet rset = prepStmt.executeQuery();
 
-            PopulationReport locationPopulation = new PopulationReport();
+            PopulationReport worldPopulation = new PopulationReport();
 
             if (rset.next()) {
-                locationPopulation.setPopulation(rset.getLong(1));
+                worldPopulation.setName("World");
+                worldPopulation.setPopulation(rset.getLong(1));
             }
 
-            return locationPopulation;
+            return worldPopulation;
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -196,11 +238,10 @@ public class PopulationReport extends Report {
         }
     }
 
-    // TODO: - possibly add error handle
     @Override
     public String toString() {
         return String.format("%s - %s",
-                getName() != null ? getName():"World",
+                getName(),
                 NumberFormat.getInstance().format(getPopulation()));
     }
 }

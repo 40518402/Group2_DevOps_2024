@@ -1,8 +1,13 @@
 package com.napier.devops;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class CityReport extends Report {
@@ -34,7 +39,13 @@ public class CityReport extends Report {
         this.district = district;
     }
 
-    public void displayCities(ArrayList<CityReport> cities) {
+    /**
+     * Prints a list of cities.
+     *
+     * @param cities The list of countries to print.
+     * @param isCapital Changes console output if list consists of capital cities or not.
+     */
+    public void displayCities(ArrayList<CityReport> cities, boolean isCapital) {
         // Check countries is not null
         if (cities == null || cities.isEmpty())
         {
@@ -43,38 +54,20 @@ public class CityReport extends Report {
         }
 
         // Print header
-        System.out.println(String.format("%-20s %-40s %-25s %-15s", "Name", "Country", "District", "Population"));
+        if (isCapital) {
+            System.out.println(String.format("%-20s %-40s %-15s", "Name", "Country", "Population"));
+        } else {
+            System.out.println(String.format("%-20s %-40s %-25s %-15s", "Name", "Country", "District", "Population"));
+        }
+
         // Loop over all countries in the list
         for (CityReport city : cities) {
             if (city == null) {
                 continue;
             }
-            String city_string =
-                    String.format("%-20s %-40s %-25s %-15s",
-                            city.getName(), city.getCountry(), city.getDistrict(), city.getPopulation());
+            String city_string = isCapital ? String.format("%-20s %-40s %-15s", city.getName(), city.getCountry(), city.getPopulation())
+                    : String.format("%-20s %-40s %-25s %-15s", city.getName(), city.getCountry(), city.getDistrict(), city.getPopulation());
             System.out.println(city_string);
-        }
-    }
-
-    public void displayCapitalCities(ArrayList<CityReport> capitalCities) {
-        // Check capital cities is not null
-        if (capitalCities == null || capitalCities.isEmpty())
-        {
-            System.out.println("No capital cities found!");
-            return;
-        }
-
-        // Print header
-        System.out.println(String.format("%-20s %-40s %-15s", "Name", "Country", "Population"));
-        // Loop over all capital cities in the list
-        for (CityReport capitalCity : capitalCities) {
-            if (capitalCity == null) {
-                continue;
-            }
-            String capital_city_string =
-                    String.format("%-20s %-40s %-15s",
-                            capitalCity.getName(), capitalCity.getCountry(), capitalCity.getPopulation());
-            System.out.println(capital_city_string);
         }
     }
 
@@ -94,6 +87,55 @@ public class CityReport extends Report {
         city.setPopulation(rset.getLong("cty.Population"));
 
         return city;
+    }
+
+    /**
+     * Outputs to Markdown
+     *
+     * @param cities The list of cities to output.
+     * @param filename The name of the outputted file.
+     * @param isCapital Changes table output if list consists of capital cities or not.
+     */
+    public void outputCityReports(ArrayList<CityReport> cities, String filename, boolean isCapital) {
+        // Check cities is null
+        if (cities == null || cities.isEmpty()) {
+            System.out.println("No cities to output!");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        // Print header
+        if (isCapital) {
+            sb.append("| Name | Country | Population |\r\n");
+            sb.append("| --- | --- | --- |\r\n");
+        } else {
+            sb.append("| Name | Country | District | Population |\r\n");
+            sb.append("| --- | --- | --- | --- |\r\n");
+        }
+
+        // Loop over all cities in the list
+        for (CityReport city : cities) {
+            if (city == null) continue;
+
+            if (isCapital) {
+                sb.append("| " + city.getName() + " | " +
+                        city.getCountry() + " | " +
+                        NumberFormat.getInstance().format(city.getPopulation()) + " |\r\n");
+            } else {
+                sb.append("| " + city.getName() + " | " +
+                        city.getCountry() + " | " + city.getDistrict() + " | " +
+                        NumberFormat.getInstance().format(city.getPopulation()) + " |\r\n");
+            }
+        }
+
+        try {
+            new File("./reports/").mkdir();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("./reports/" + filename)));
+            writer.write(sb.toString());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // --------------------------------------- City Query Methods --------------------------------------------------------
