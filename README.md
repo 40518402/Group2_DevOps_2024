@@ -36,8 +36,8 @@
 | 24 | The population of people, people living in cities, and people not living in cities in each region.                                           | Yes | Image |
 | 25 | The population of people, people living in cities, and people not living in cities in each country.                                          | Yes | Image |
 | 26 | The population of the world.                                                                                                                 | Yes | Image |
-| 27 | The total population of a continent.                                                                                                         | Yes | Image |
-| 28 | The total population of a region.                                                                                                            | Yes | Image |
+| 27 | The population of a continent.                                                                                                               | Yes | Image |
+| 28 | The population of a region.                                                                                                                  | Yes | Image |
 | 29 | The population of a country.                                                                                                                 | Yes | Image |
 | 30 | The population of a district.                                                                                                                | Yes | Image |
 | 31 | The population of a city.                                                                                                                    | Yes | Image |
