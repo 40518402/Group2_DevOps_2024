@@ -69,8 +69,8 @@ public class CityReport extends Report {
             if (city == null) {
                 continue;
             }
-            String city_string = isCapital ? String.format("%-20s %-40s %-15s", city.getName(), city.getCountry(), city.getPopulation())
-                    : String.format("%-20s %-40s %-25s %-15s", city.getName(), city.getCountry(), city.getDistrict(), city.getPopulation());
+            String city_string = isCapital ? String.format("%-20s %-40s %-15s", city.getName(), city.getCountry(), NumberFormat.getInstance().format(city.getPopulation()))
+                    : String.format("%-20s %-40s %-25s %-15s", city.getName(), city.getCountry(), city.getDistrict(), NumberFormat.getInstance().format(city.getPopulation()));
             System.out.println(city_string);
         }
     }

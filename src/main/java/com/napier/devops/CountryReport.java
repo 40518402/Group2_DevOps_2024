@@ -74,7 +74,7 @@ public class CountryReport extends Report {
             }
             String country_string =
                     String.format("%-5s %-48s %-15s %-28s %20s %10s",
-                            country.getCode(), country.getName(), country.getContinent(), country.getRegion(), country.getPopulation(), country.getCapital() != null ? country.getCapital() : "N/A");
+                            country.getCode(), country.getName(), country.getContinent(), country.getRegion(), NumberFormat.getInstance().format(country.getPopulation()), country.getCapital() != null ? country.getCapital() : "N/A");
             System.out.println(country_string);
         }
     }

@@ -53,6 +53,27 @@ public class PopulationReport extends Report {
     }
 
     /**
+     *
+     * @return PopulationReport object instance as a string.
+     */
+    @Override
+    public String toString() {
+        if (getUrbanPopulation() == 0 && getUrbanPopulationPercentage() == 0 && getRuralPopulation() == 0 && getRuralPopulationPercentage() == 0) {
+            return String.format("Population Report(%s - %s)",
+                    getName(),
+                    NumberFormat.getInstance().format(getPopulation()));
+        } else {
+            return String.format("Population Report(%s - %s - %s - %.2f%% - %s - %.2f%%)",
+                    getName(),
+                    NumberFormat.getInstance().format(getPopulation()),
+                    NumberFormat.getInstance().format(getUrbanPopulation()),
+                    getUrbanPopulationPercentage(),
+                    NumberFormat.getInstance().format(getRuralPopulation()),
+                    getRuralPopulationPercentage());
+        }
+    }
+
+    /**
      * Prints a list of population data.
      *
      * @param populations The list of population data to print.
@@ -72,8 +93,13 @@ public class PopulationReport extends Report {
                 continue;
             }
             String population_string =
-                    String.format("%-40s %-25s %-25s %15s %25s %15s",
-                            population.getName(), population.getPopulation(), population.getUrbanPopulation(), population.getUrbanPopulationPercentage(), population.getRuralPopulation(), population.getRuralPopulationPercentage());
+                    String.format("%-40s %-25s %-25s %15s%% %25s %15s%%",
+                            population.getName(),
+                            NumberFormat.getInstance().format(population.getPopulation()),
+                            NumberFormat.getInstance().format(population.getUrbanPopulation()),
+                            population.getUrbanPopulationPercentage(),
+                            NumberFormat.getInstance().format(population.getRuralPopulation()),
+                            population.getRuralPopulationPercentage());
             System.out.println(population_string);
         }
     }
@@ -271,27 +297,6 @@ public class PopulationReport extends Report {
             System.out.println(e.getMessage());
             System.out.println("Failed to retrieve details.");
             return null;
-        }
-    }
-
-    /**
-     *
-     * @return PopulationReport object instance as a string.
-     */
-    @Override
-    public String toString() {
-        if (getUrbanPopulation() == 0 && getUrbanPopulationPercentage() == 0 && getRuralPopulation() == 0 && getRuralPopulationPercentage() == 0) {
-            return String.format("Population Report(%s - %s)",
-                    getName(),
-                    NumberFormat.getInstance().format(getPopulation()));
-        } else {
-            return String.format("Population Report(%s - %s - %s - %.2f%% - %s - %.2f%%)",
-                    getName(),
-                    NumberFormat.getInstance().format(getPopulation()),
-                    NumberFormat.getInstance().format(getUrbanPopulation()),
-                    getUrbanPopulationPercentage(),
-                    NumberFormat.getInstance().format(getRuralPopulation()),
-                    getRuralPopulationPercentage());
         }
     }
 }
