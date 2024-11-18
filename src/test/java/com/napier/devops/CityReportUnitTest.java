@@ -33,6 +33,36 @@ public class CityReportUnitTest {
     }
 
     @Test
+    void toStringCityTestEmpty() {
+        CityReport belmopan = new CityReport();
+        System.out.println(belmopan.toString());
+    }
+
+    @Test
+    void toStringCityTestContainsNullValue() {
+        CityReport belmopan = new CityReport();
+        belmopan.setId((short) 0);
+        belmopan.setName(null);
+        belmopan.setCountry(null);
+        belmopan.setDistrict(null);
+        belmopan.setPopulation(0);
+
+        System.out.println(belmopan.toString());
+    }
+
+    @Test
+    void toStringCityTestNormal() {
+        CityReport belmopan = new CityReport();
+        belmopan.setId((short) 185);
+        belmopan.setName("Belmopan");
+        belmopan.setCountry("Belize");
+        belmopan.setDistrict("Cayo");
+        belmopan.setPopulation(7105);
+
+        System.out.println(belmopan.toString());
+    }
+
+    @Test
     void displayCitiesTestNull() {
         cityReport.displayCities(null, false);
     }

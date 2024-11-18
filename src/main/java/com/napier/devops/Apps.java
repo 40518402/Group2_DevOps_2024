@@ -15,7 +15,7 @@ public class Apps
 
         // Connect to database
         if(args.length < 1){
-            popReport.connect("localhost:33060", 30000);
+            popReport.connect("localhost:33060", 0);
         }else{
             popReport.connect(args[0], Integer.parseInt(args[1]));
         }

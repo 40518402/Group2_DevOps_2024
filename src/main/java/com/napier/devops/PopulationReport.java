@@ -64,7 +64,7 @@ public class PopulationReport extends Report {
                     NumberFormat.getInstance().format(getPopulation()));
         } else {
             return String.format("PopulationReport{Name = %s, Total Population = %s, Urban Population = %s, Urban Percentage = %.2f%%, Rural Population = %s, Rural Percentage = %.2f%%}",
-                    getName(),
+                    getName() != null ? getName() : "N/A",
                     NumberFormat.getInstance().format(getPopulation()),
                     NumberFormat.getInstance().format(getUrbanPopulation()),
                     getUrbanPopulationPercentage(),

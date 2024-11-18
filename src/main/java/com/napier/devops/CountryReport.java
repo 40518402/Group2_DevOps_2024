@@ -59,12 +59,12 @@ public class CountryReport extends Report {
     @Override
     public String toString() {
         return String.format("CountryReport{Code = %s, Name = %s, Continent = %s, Region = %s, Population = %s, Capital = %s}",
-                getCode(),
-                getName(),
-                getContinent(),
-                getRegion(),
+                getCode() != null ? getCode() : "N/A",
+                getName() != null ? getName() : "N/A",
+                getContinent() != null ? getContinent() : "N/A",
+                getRegion() != null ? getRegion() : "N/A",
                 NumberFormat.getInstance().format(getPopulation()),
-                getCapital());
+                getCapital() != null ? getCapital() : "N/A");
     }
 
     /**

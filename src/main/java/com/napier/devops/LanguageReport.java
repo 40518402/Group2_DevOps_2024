@@ -50,10 +50,11 @@ public class LanguageReport extends Report {
     @Override
     public String toString() {
         return String.format("LanguageReport{Language = %s, Total_Speakers = %s, World_Percentage = %.2f%%}",
-                getLanguage(),
+                getLanguage() != null ? getLanguage() : "N/A",
                 NumberFormat.getInstance().format(getTotalSpeakers()),
                 getWorldPercentage());
     }
+
     /**
      * Prints a list of language data.
      *

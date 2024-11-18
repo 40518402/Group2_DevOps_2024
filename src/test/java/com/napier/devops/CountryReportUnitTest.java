@@ -37,6 +37,37 @@ public class CountryReportUnitTest
     }
 
     @Test
+    void toStringCountryTestEmpty() {
+        CountryReport belize = new CountryReport();
+        System.out.println(belize.toString());
+    }
+
+    @Test
+    void toStringCountryTestContainsNullValue() {
+        CountryReport belize = new CountryReport();
+        belize.setCode(null);
+        belize.setName(null);
+        belize.setContinent(null);
+        belize.setRegion(null);
+        belize.setPopulation(0);
+        belize.setCapital(null);
+        System.out.println(belize.toString());
+    }
+
+    @Test
+    void toStringCountryTestNormal() {
+        CountryReport belize = new CountryReport();
+        belize.setCode("BLZ");
+        belize.setName("Belize");
+        belize.setContinent("North America");
+        belize.setRegion("Central America");
+        belize.setPopulation(241000);
+        belize.setCapital("Belmopan");
+
+        System.out.println(belize.toString());
+    }
+
+    @Test
     void displayCountriesTestNull() {
         countryReport.displayCountries(null);
     }

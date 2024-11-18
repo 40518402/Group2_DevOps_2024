@@ -51,9 +51,9 @@ public class CityReport extends Report {
     public String toString() {
         return String.format("CityReport{Id = %d, Name = %s, Country = %s, District = %s, Population = %s}",
                 getId(),
-                getName(),
-                getCountry(),
-                getDistrict(),
+                getName() != null ? getName() : "N/A",
+                getCountry() != null ? getCountry() : "N/A",
+                getDistrict() != null ? getDistrict() : "N/A",
                 NumberFormat.getInstance().format(getPopulation()));
     }
 
