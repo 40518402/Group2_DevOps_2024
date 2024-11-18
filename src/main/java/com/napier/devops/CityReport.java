@@ -44,6 +44,20 @@ public class CityReport extends Report {
     }
 
     /**
+     *
+     * @return CityReport object instance as a string.
+     */
+    @Override
+    public String toString() {
+        return String.format("CityReport{Id = %d, Name = %s, Country = %s, District = %s, Population = %s}",
+                getId(),
+                getName(),
+                getCountry(),
+                getDistrict(),
+                NumberFormat.getInstance().format(getPopulation()));
+    }
+
+    /**
      * Prints a list of cities.
      *
      * @param cities The list of countries to print.

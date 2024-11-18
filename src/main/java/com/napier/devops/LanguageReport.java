@@ -44,6 +44,17 @@ public class LanguageReport extends Report {
     }
 
     /**
+     *
+     * @return LanguageReport object instance as a string.
+     */
+    @Override
+    public String toString() {
+        return String.format("LanguageReport{Language = %s, Total_Speakers = %s, World_Percentage = %.2f%%}",
+                getLanguage(),
+                NumberFormat.getInstance().format(getTotalSpeakers()),
+                getWorldPercentage());
+    }
+    /**
      * Prints a list of language data.
      *
      * @param languages The list of language data to print.

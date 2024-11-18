@@ -53,6 +53,21 @@ public class CountryReport extends Report {
     }
 
     /**
+     *
+     * @return CountryReport object instance as a string.
+     */
+    @Override
+    public String toString() {
+        return String.format("CountryReport{Code = %s, Name = %s, Continent = %s, Region = %s, Population = %s, Capital = %s}",
+                getCode(),
+                getName(),
+                getContinent(),
+                getRegion(),
+                NumberFormat.getInstance().format(getPopulation()),
+                getCapital());
+    }
+
+    /**
      * Prints a list of countries.
      *
      * @param countries The list of countries to print.

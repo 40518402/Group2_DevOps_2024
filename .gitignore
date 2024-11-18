@@ -37,3 +37,7 @@ buildNumber.properties
 # IntelliJ
 *.iml
 .idea/
+
+# reports
+reports/
+*.md

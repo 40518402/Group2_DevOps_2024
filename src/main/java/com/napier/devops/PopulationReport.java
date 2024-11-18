@@ -59,11 +59,11 @@ public class PopulationReport extends Report {
     @Override
     public String toString() {
         if (getUrbanPopulation() == 0 && getUrbanPopulationPercentage() == 0 && getRuralPopulation() == 0 && getRuralPopulationPercentage() == 0) {
-            return String.format("Population Report(%s - %s)",
+            return String.format("PopulationReport{Name = %s, Total Population = %s}",
                     getName(),
                     NumberFormat.getInstance().format(getPopulation()));
         } else {
-            return String.format("Population Report(%s - %s - %s - %.2f%% - %s - %.2f%%)",
+            return String.format("PopulationReport{Name = %s, Total Population = %s, Urban Population = %s, Urban Percentage = %.2f%%, Rural Population = %s, Rural Percentage = %.2f%%}",
                     getName(),
                     NumberFormat.getInstance().format(getPopulation()),
                     NumberFormat.getInstance().format(getUrbanPopulation()),
