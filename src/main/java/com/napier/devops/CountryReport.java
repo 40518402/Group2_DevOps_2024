@@ -107,6 +107,11 @@ public class CountryReport extends Report {
             return;
         }
 
+        if (filename == null) {
+            System.out.println("No filename was entered!");
+            return;
+        }
+
         StringBuilder sb = new StringBuilder();
         // Print header
         sb.append("| Code | Country | Continent | Region | Population | Capital |\r\n");

@@ -121,6 +121,11 @@ public class CityReport extends Report {
             return;
         }
 
+        if (filename == null) {
+            System.out.println("No filename was entered!");
+            return;
+        }
+
         StringBuilder sb = new StringBuilder();
         // Print header
         if (isCapital) {

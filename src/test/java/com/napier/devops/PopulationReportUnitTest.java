@@ -13,7 +13,6 @@ public class PopulationReportUnitTest {
 
     @BeforeAll
     static void init() {
-
         populationReport = new PopulationReport();
     }
 
@@ -33,7 +32,6 @@ public class PopulationReportUnitTest {
         assertEquals(26.11f, population.getUrbanPopulationPercentage());
         assertEquals(178085, population.getRuralPopulation());
         assertEquals(73.89f, population.getRuralPopulationPercentage());
-
     }
 
     @Test
@@ -97,6 +95,95 @@ public class PopulationReportUnitTest {
         population.setRuralPopulation(178085);
         population.setRuralPopulationPercentage(73.89f);
         populations.add(population);
+
         populationReport.displayPopulations(populations);
+    }
+
+    @Test
+    void outputPopulationReportsNullTest() {
+        ArrayList<PopulationReport> populations = null;
+        populationReport.outputPopulationReports(populations, "populationsTestNull.md");
+    }
+
+    @Test
+    void outputPopulationsReportsEmptyTest() {
+        ArrayList<PopulationReport> populations = new ArrayList<PopulationReport>();
+        populationReport.outputPopulationReports(populations, "populationsTestEmpty.md");
+    }
+
+    @Test
+    void outputPopulationReportsContainsNullTest() {
+        ArrayList<PopulationReport> populations = new ArrayList<PopulationReport>();
+        populations.add(null);
+
+        populationReport.outputPopulationReports(populations, "populationsTestContainsNull.md");
+    }
+
+    @Test
+    void outputPopulationReportsNormalTest() {
+        ArrayList<PopulationReport> populations = new ArrayList<PopulationReport>();
+        PopulationReport population = new PopulationReport();
+        population.setName("Belize");
+        population.setPopulation(241000);
+        population.setUrbanPopulation(62915);
+        population.setUrbanPopulationPercentage(26.11f);
+        population.setRuralPopulation(178085);
+        population.setRuralPopulationPercentage(73.89f);
+        populations.add(population);
+
+        populationReport.outputPopulationReports(populations, "populationsTestNormal.md");
+    }
+
+    @Test
+    void outputPopulationReportsFilenameNullTest() {
+        ArrayList<PopulationReport> populations = new ArrayList<PopulationReport>();
+        PopulationReport population = new PopulationReport();
+        population.setName("Belize");
+        population.setPopulation(241000);
+        population.setUrbanPopulation(62915);
+        population.setUrbanPopulationPercentage(26.11f);
+        population.setRuralPopulation(178085);
+        population.setRuralPopulationPercentage(73.89f);
+        populations.add(population);
+
+        populationReport.outputPopulationReports(populations, null);
+    }
+
+    @Test
+    void outputPopulationReportsNullMOTest() {
+        PopulationReport populationBelize = null;
+        populationReport.outputPopulationReports(populationBelize, "populationBelizeTestNull.md");
+    }
+
+    @Test
+    void outputPopulationsReportsEmptyMOTest() {
+        PopulationReport populationBelize = new PopulationReport();
+        populationReport.outputPopulationReports(populationBelize, "populationBelizeTestEmpty.md");
+    }
+
+    @Test
+    void outputPopulationReportsNormalMOTest() {
+        PopulationReport populationBelize = new PopulationReport();
+        populationBelize.setName("Belize");
+        populationBelize.setPopulation(241000);
+        populationBelize.setUrbanPopulation(62915);
+        populationBelize.setUrbanPopulationPercentage(26.11f);
+        populationBelize.setRuralPopulation(178085);
+        populationBelize.setRuralPopulationPercentage(73.89f);
+
+        populationReport.outputPopulationReports(populationBelize, "populationBelizeTestNormal.md");
+    }
+
+    @Test
+    void outputPopulationReportsFilenameNullMOTest() {
+        PopulationReport populationBelize = new PopulationReport();
+        populationBelize.setName("Belize");
+        populationBelize.setPopulation(241000);
+        populationBelize.setUrbanPopulation(62915);
+        populationBelize.setUrbanPopulationPercentage(26.11f);
+        populationBelize.setRuralPopulation(178085);
+        populationBelize.setRuralPopulationPercentage(73.89f);
+
+        populationReport.outputPopulationReports(populationBelize, null);
     }
 }

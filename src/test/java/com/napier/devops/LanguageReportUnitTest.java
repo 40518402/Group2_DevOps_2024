@@ -81,6 +81,51 @@ public class LanguageReportUnitTest {
         english.setTotalSpeakers(347077867);
         english.setWorldPercentage(5.71f);
         languages.add(english);
+
         languageReport.displayLanguages(languages);
+    }
+
+    @Test
+    void outputLanguageReportsNullTest() {
+        ArrayList<LanguageReport> languages = null;
+        languageReport.outputLanguageReports(languages, "languagesTestNull.md");
+    }
+
+    @Test
+    void outputLanguageReportsEmptyTest() {
+        ArrayList<LanguageReport> languages = new ArrayList<LanguageReport>();
+        languageReport.outputLanguageReports(languages, "languagesTestEmpty.md");
+    }
+
+    @Test
+    void outputLanguageReportsContainsNullTest() {
+        ArrayList<LanguageReport> languages = new ArrayList<LanguageReport>();
+        languages.add(null);
+
+        languageReport.outputLanguageReports(languages, "languagesTestContainsNull.md");
+    }
+
+    @Test
+    void outputLanguageReportsNormalTest() {
+        ArrayList<LanguageReport> languages = new ArrayList<LanguageReport>();
+        LanguageReport english = new LanguageReport();
+        english.setLanguage("English");
+        english.setTotalSpeakers(347077867);
+        english.setWorldPercentage(5.71f);
+        languages.add(english);
+
+        languageReport.outputLanguageReports(languages, "languagesTestNormal.md");
+    }
+
+    @Test
+    void outputLanguageReportsFilenameNullTest() {
+        ArrayList<LanguageReport> languages = new ArrayList<LanguageReport>();
+        LanguageReport english = new LanguageReport();
+        english.setLanguage("English");
+        english.setTotalSpeakers(347077867);
+        english.setWorldPercentage(5.71f);
+        languages.add(english);
+
+        languageReport.outputLanguageReports(languages, null);
     }
 }

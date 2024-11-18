@@ -127,6 +127,69 @@ public class CityReportUnitTest {
         belmopan.setDistrict("Cayo");
         belmopan.setPopulation(7105);
         capitalCities.add(belmopan);
+
         cityReport.displayCities(capitalCities, true);
+    }
+
+    @Test
+    void outputCityReportsNullTest() {
+        ArrayList<CityReport> cities = null;
+        cityReport.outputCityReports(cities, "citiesTestNull.md", false);
+    }
+
+    @Test
+    void outputCityReportsEmptyTest() {
+        ArrayList<CityReport> cities = new ArrayList<CityReport>();
+        cityReport.outputCityReports(cities, "citiesTestEmpty.md", false);
+    }
+
+    @Test
+    void outputCityReportsContainsNullTest() {
+        ArrayList<CityReport> cities = new ArrayList<CityReport>();
+        cities.add(null);
+
+        cityReport.outputCityReports(cities, "citiesTestContainsNull.md", false);
+    }
+
+    @Test
+    void outputCityReportsNormalTest() {
+        ArrayList<CityReport> cities = new ArrayList<CityReport>();
+        CityReport belmopan = new CityReport();
+        belmopan.setId((short) 185);
+        belmopan.setName("Belmopan");
+        belmopan.setCountry("Belize");
+        belmopan.setDistrict("Cayo");
+        belmopan.setPopulation(7105);
+        cities.add(belmopan);
+
+        cityReport.outputCityReports(cities, "citiesTestNormal.md", false);
+    }
+
+    @Test
+    void outputCapitalCityReportsNormalTest() {
+        ArrayList<CityReport> cities = new ArrayList<CityReport>();
+        CityReport belmopan = new CityReport();
+        belmopan.setId((short) 185);
+        belmopan.setName("Belmopan");
+        belmopan.setCountry("Belize");
+        belmopan.setDistrict("Cayo");
+        belmopan.setPopulation(7105);
+        cities.add(belmopan);
+
+        cityReport.outputCityReports(cities, "capitalCitiesTestNormal.md", true);
+    }
+
+    @Test
+    void outputCityReportsFilenameNullTest() {
+        ArrayList<CityReport> cities = new ArrayList<CityReport>();
+        CityReport belmopan = new CityReport();
+        belmopan.setId((short) 185);
+        belmopan.setName("Belmopan");
+        belmopan.setCountry("Belize");
+        belmopan.setDistrict("Cayo");
+        belmopan.setPopulation(7105);
+        cities.add(belmopan);
+
+        cityReport.outputCityReports(cities, null, false);
     }
 }

@@ -101,4 +101,54 @@ public class CountryReportUnitTest
         countries.add(belize);
         countryReport.displayCountries(countries);
     }
+
+    @Test
+    void outputCountryReportsNullTest() {
+        ArrayList<CountryReport> countries = null;
+        countryReport.outputCountryReports(countries, "countriesTestNull.md");
+    }
+
+    @Test
+    void outputCountryReportsEmptyTest() {
+        ArrayList<CountryReport> countries = new ArrayList<CountryReport>();
+        countryReport.outputCountryReports(countries, "countriesTestEmpty.md");
+    }
+
+    @Test
+    void outputCountryReportsContainsNullTest() {
+        ArrayList<CountryReport> countries = new ArrayList<CountryReport>();
+        countries.add(null);
+
+        countryReport.outputCountryReports(countries, "countriesTestContainsNull.md");
+    }
+
+    @Test
+    void outputCountryReportsNormalTest() {
+        ArrayList<CountryReport> countries = new ArrayList<CountryReport>();
+        CountryReport belize = new CountryReport();
+        belize.setCode("BLZ");
+        belize.setName("Belize");
+        belize.setContinent("North America");
+        belize.setRegion("Central America");
+        belize.setPopulation(241000);
+        belize.setCapital("Belmopan");
+        countries.add(belize);
+
+        countryReport.outputCountryReports(countries, "countriesTestNormal.md");
+    }
+
+    @Test
+    void outputCountryReportsFilenameNullTest() {
+        ArrayList<CountryReport> countries = new ArrayList<CountryReport>();
+        CountryReport belize = new CountryReport();
+        belize.setCode("BLZ");
+        belize.setName("Belize");
+        belize.setContinent("North America");
+        belize.setRegion("Central America");
+        belize.setPopulation(241000);
+        belize.setCapital("Belmopan");
+        countries.add(belize);
+
+        countryReport.outputCountryReports(countries, null);
+    }
 }

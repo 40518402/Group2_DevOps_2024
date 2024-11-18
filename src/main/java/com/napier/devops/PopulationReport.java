@@ -136,6 +136,11 @@ public class PopulationReport extends Report {
             return;
         }
 
+        if (filename == null) {
+            System.out.println("No filename was entered!");
+            return;
+        }
+
         StringBuilder sb = new StringBuilder();
         // Print header
         sb.append("| Name | Total Population | Urban Population | Urban Percentage | Rural Population | Rural Percentage |\r\n");
@@ -170,6 +175,11 @@ public class PopulationReport extends Report {
         // Check populations is null
         if (populationData == null) {
             System.out.println("No population data to output!");
+            return;
+        }
+
+        if (filename == null) {
+            System.out.println("No filename was entered!");
             return;
         }
 

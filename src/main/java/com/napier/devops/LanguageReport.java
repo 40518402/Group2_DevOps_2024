@@ -109,6 +109,11 @@ public class LanguageReport extends Report {
             return;
         }
 
+        if (filename == null) {
+            System.out.println("No filename was entered!");
+            return;
+        }
+
         StringBuilder sb = new StringBuilder();
         // Print header
         sb.append("| Language | Total Speakers | World Percentage |\r\n");
