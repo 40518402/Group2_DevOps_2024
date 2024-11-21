@@ -278,28 +278,28 @@ public class CityReportIntegrationTest {
 
     @Test
     void getCapitalCitiesInWorldNormalTest() {
-        ArrayList<CityReport> topCapitalCitiesInWorld = cityReport.getCapitalCitiesWorldwide(10);
+        ArrayList<CityReport> topCapitalCitiesInWorld = cityReport.getCapitalCitiesWorldWide(10);
 
         assertEquals(10, topCapitalCitiesInWorld.size());
     }
 
     @Test
     void getCapitalCitiesInWorldNullNumberTest() {
-        ArrayList<CityReport> capitalCitiesInWorld = cityReport.getCapitalCitiesWorldwide(null);
+        ArrayList<CityReport> capitalCitiesInWorld = cityReport.getCapitalCitiesWorldWide(null);
 
         assertNotNull(capitalCitiesInWorld);
     }
 
     @Test
     void getCapitalCitiesInWorldNegativeNumberTest() {
-        ArrayList<CityReport> capitalCitiesInWorld = cityReport.getCapitalCitiesWorldwide(-5);
+        ArrayList<CityReport> capitalCitiesInWorld = cityReport.getCapitalCitiesWorldWide(-5);
 
         assertNull(capitalCitiesInWorld);
     }
 
     @Test
     void getCapitalCitiesInWorldZeroTest() {
-        ArrayList<CityReport> capitalCitiesInWorld = cityReport.getCapitalCitiesWorldwide(0);
+        ArrayList<CityReport> capitalCitiesInWorld = cityReport.getCapitalCitiesWorldWide(0);
 
         assertEquals(0, capitalCitiesInWorld.size());
     }
