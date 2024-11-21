@@ -129,10 +129,10 @@ public class CityReport extends Report {
         StringBuilder sb = new StringBuilder();
         // Print header
         if (isCapital) {
-            sb.append("| Name | Country | Population |\r\n");
+            sb.append("| Capital City | Country | Population |\r\n");
             sb.append("| --- | --- | --- |\r\n");
         } else {
-            sb.append("| Name | Country | District | Population |\r\n");
+            sb.append("| City | Country | District | Population |\r\n");
             sb.append("| --- | --- | --- | --- |\r\n");
         }
 
@@ -403,7 +403,7 @@ public class CityReport extends Report {
      * @param N The number of top populated capital cities to retrieve.
      * @return A list of capital cities in a region, or null if there is an error.
      */
-    public ArrayList<CityReport> getCapitalCitiesWorldwide(Integer N) {
+    public ArrayList<CityReport> getCapitalCitiesWorldWide(Integer N) {
         String query = "SELECT cty.ID, cty.Name, ctry.Name AS Country, cty.District, cty.Population "
                 + "FROM city cty "
                 + "JOIN country ctry ON cty.ID = ctry.Capital "
@@ -438,7 +438,7 @@ public class CityReport extends Report {
 
     // Overloaded method with a default value of null for N once not specified.
     public ArrayList<CityReport> getCapitalCitiesWorldWide() {
-        return getCapitalCitiesWorldwide(null);
+        return getCapitalCitiesWorldWide(null);
     }
 
     /**
