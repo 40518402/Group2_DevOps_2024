@@ -116,9 +116,9 @@ public class CountryReportIntegrationTest
 
     @Test
     void getCountriesInContinentZeroTest() {
-        ArrayList<CountryReport> countriesInWorld = countryReport.getCountriesInContinent("Asia",0);
+        ArrayList<CountryReport> countriesInContinent = countryReport.getCountriesInContinent("Asia",0);
 
-        assertEquals(0, countriesInWorld.size());
+        assertEquals(0, countriesInContinent.size());
     }
 
     @Test
