@@ -41,3 +41,6 @@ buildNumber.properties
 # reports
 reports/
 *.md
+
+# qodana file/pmd alternative
+qodana.yaml

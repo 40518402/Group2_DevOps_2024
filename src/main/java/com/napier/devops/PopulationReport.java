@@ -201,6 +201,76 @@ public class PopulationReport extends Report {
     }
 
     /**
+     * Retrieves the population data for each continent, including city and non-city populations.
+     *
+     * @return A list of population data for each continent.
+     */
+    public ArrayList<PopulationReport> getPopulationDataByContinent() {
+        String query = "SELECT ctry.Continent, SUM(DISTINCT(ctry.Population)) AS Total_Population, "
+                + "IFNULL(SUM(cty.Population),0) AS Urban_Population, "
+                + "IFNULL(ROUND(((IFNULL(SUM(cty.Population),0) * 100) / SUM(DISTINCT(ctry.Population))),2),0) AS Urban_Percentage, "
+                + "IFNULL((SUM(DISTINCT(ctry.Population)) - SUM(cty.Population)),0) AS Rural_Population, "
+                + "IFNULL(ROUND((((SUM(DISTINCT(ctry.Population)) - IFNULL(SUM(cty.Population),0)) * 100) / SUM(DISTINCT(ctry.Population))),2),0) AS Rural_Percentage "
+                + "FROM country ctry "
+                + "LEFT JOIN city cty ON ctry.Code = cty.CountryCode "
+                + "GROUP BY ctry.Continent "
+                + "ORDER BY Total_Population DESC";
+
+        try(PreparedStatement prepStmt = getDatabaseConnection().prepareStatement(query)) {
+
+            ResultSet rset = prepStmt.executeQuery();
+
+            ArrayList<PopulationReport> populationReports = new ArrayList<>();
+
+            while (rset.next()) {
+                populationReports.add(mapToPopulationReport(rset));
+            }
+
+            return populationReports;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve population details.");
+            return null;
+        }
+    }
+
+    /**
+     * Retrieves the population data for each region, including city and non-city populations.
+     *
+     * @return A list of population data for each region.
+     */
+    public ArrayList<PopulationReport> getPopulationDataByRegion() {
+        String query = "SELECT ctry.Region, SUM(DISTINCT(ctry.Population)) AS Total_Population, "
+                + "IFNULL(SUM(cty.Population),0) AS Urban_Population, "
+                + "IFNULL(ROUND(((IFNULL(SUM(cty.Population),0) * 100) / SUM(DISTINCT(ctry.Population))),2),0) AS Urban_Percentage, "
+                + "IFNULL((SUM(DISTINCT(ctry.Population)) - SUM(cty.Population)),0) AS Rural_Population, "
+                + "IFNULL(ROUND((((SUM(DISTINCT(ctry.Population)) - IFNULL(SUM(cty.Population),0)) * 100) / SUM(DISTINCT(ctry.Population))),2),0) AS Rural_Percentage "
+                + "FROM country ctry "
+                + "LEFT JOIN city cty ON ctry.Code = cty.CountryCode "
+                + "GROUP BY ctry.Region "
+                + "ORDER BY Total_Population DESC";
+
+        try(PreparedStatement prepStmt = getDatabaseConnection().prepareStatement(query)) {
+
+            ResultSet rset = prepStmt.executeQuery();
+
+            ArrayList<PopulationReport> populationReports = new ArrayList<>();
+
+            while (rset.next()) {
+                populationReports.add(mapToPopulationReport(rset));
+            }
+
+            return populationReports;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve population details.");
+            return null;
+        }
+    }
+
+    /**
      * Retrieves the population data for each country, including city and non-city populations.
      *
      * @return A list of population data for each country.

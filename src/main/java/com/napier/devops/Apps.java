@@ -1,5 +1,6 @@
 package com.napier.devops;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 /**
@@ -15,7 +16,7 @@ public class Apps
 
         // Connect to database
         if(args.length < 1){
-            popReport.connect("localhost:33060", 30000);
+            popReport.connect("localhost:33060", 0);
         }else{
             popReport.connect(args[0], Integer.parseInt(args[1]));
         }
@@ -49,6 +50,18 @@ public class Apps
         // The population of people, people living in cities, and people not living in cities in each country.
         ArrayList<PopulationReport> eachCountryPopulation = popReport.getPopulationDataByCountry();
         popReport.displayPopulations(eachCountryPopulation);
+
+        System.out.println();
+
+        // The population of people, people living in cities, and people not living in cities in each continent.
+        ArrayList<PopulationReport> eachContinentPopulation = popReport.getPopulationDataByContinent();
+        popReport.displayPopulations(eachContinentPopulation);
+
+        System.out.println();
+
+        // The population of people, people living in cities, and people not living in cities in each region.
+        ArrayList<PopulationReport> eachRegionPopulation = popReport.getPopulationDataByRegion();
+        popReport.displayPopulations(eachRegionPopulation);
 
         System.out.println();
 
