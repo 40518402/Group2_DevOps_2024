@@ -8,6 +8,8 @@
 * Master Code Coverage [![codecov](https://codecov.io/github/40518402/Group2_DevOps_2024/branch/master/graph/badge.svg?token=ES6WGKMHF6)](https://codecov.io/github/40518402/Group2_DevOps_2024)
 * Develop Code Coverage [![codecov](https://codecov.io/github/40518402/Group2_DevOps_2024/branch/develop/graph/badge.svg?token=ES6WGKMHF6)](https://codecov.io/github/40518402/Group2_DevOps_2024)
 
+> 32 requirements of 32 have been implemented, which is 100%.
+
 | ID | Name                                                                                                                                         | Met | Image                   |
 |:--:|----------------------------------------------------------------------------------------------------------------------------------------------|:---:|-------------------------|
 | 1  | All the countries in the world organised by largest population to smallest.                                                                  | Yes | ![Req1](img/img1.png)   |
