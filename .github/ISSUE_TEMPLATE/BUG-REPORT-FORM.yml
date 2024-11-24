@@ -35,11 +35,19 @@ body:
       description: Steps to reproduce the behavior.
       placeholder: |
         1. In this environment...
-        1. With this config...
-        1. Run '...'
-        1. See error...
+        2. With this config...
+        3. Run '...'
+        4. See error...
     validations:
       required: false
+  - type: input
+    id: operating-system
+    attributes:
+      label: Operating System
+      description: What operating system did you use?
+      placeholder: ex. Windows 11, Ubuntu 24.04, macOS, etc...
+    validations:
+      required: true
   - type: dropdown
     id: version
     attributes:
