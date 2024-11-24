@@ -68,7 +68,7 @@ public class LanguageReport extends Report {
         }
 
         // Print header
-        System.out.println(String.format("%-20s %-25s %-15s", "Language", "Total Speakers", "World Percentage"));
+        System.out.printf("%-20s %-25s %-15s%n", "Language", "Total Speakers", "World Percentage");
         for (LanguageReport language : languages) {
             if (language == null) {
                 continue;
@@ -121,9 +121,7 @@ public class LanguageReport extends Report {
         // Loop over all languages in the list
         for (LanguageReport language : languages) {
             if (language == null) continue;
-            sb.append("| " + language.getLanguage() + " | "
-                    + NumberFormat.getInstance().format(language.getTotalSpeakers()) + " | "
-                    + language.getWorldPercentage() + "%" + " |\r\n");
+            sb.append("| ").append(language.getLanguage()).append(" | ").append(NumberFormat.getInstance().format(language.getTotalSpeakers())).append(" | ").append(language.getWorldPercentage()).append("%").append(" |\r\n");
         }
         try {
             new File("./reports/").mkdir();

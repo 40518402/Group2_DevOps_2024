@@ -86,7 +86,7 @@ public class PopulationReport extends Report {
         }
 
         // Print header
-        System.out.println(String.format("%-40s %-25s %-25s %15s %25s %15s", "Name", "Total Population", "Urban Population", "Percentage", "Rural Population", "Percentage"));
+        System.out.printf("%-40s %-25s %-25s %15s %25s %15s%n", "Name", "Total Population", "Urban Population", "Percentage", "Rural Population", "Percentage");
         // Loop over all population data in the list
         for (PopulationReport population : populations) {
             if (population == null) {
@@ -148,12 +148,7 @@ public class PopulationReport extends Report {
         // Loop over all population data in the list
         for (PopulationReport population : populations) {
             if (population == null) continue;
-            sb.append("| " + population.getName() + " | "
-                    + NumberFormat.getInstance().format(population.getPopulation()) + " | "
-                    + NumberFormat.getInstance().format(population.getUrbanPopulation()) + " | "
-                    + population.getUrbanPopulationPercentage() + "%" + " | "
-                    + NumberFormat.getInstance().format(population.getRuralPopulation()) + " | "
-                    + population.getRuralPopulationPercentage() + "%" + " |\r\n");
+            sb.append("| ").append(population.getName()).append(" | ").append(NumberFormat.getInstance().format(population.getPopulation())).append(" | ").append(NumberFormat.getInstance().format(population.getUrbanPopulation())).append(" | ").append(population.getUrbanPopulationPercentage()).append("%").append(" | ").append(NumberFormat.getInstance().format(population.getRuralPopulation())).append(" | ").append(population.getRuralPopulationPercentage()).append("%").append(" |\r\n");
         }
         try {
             new File("./reports/").mkdir();
@@ -187,8 +182,7 @@ public class PopulationReport extends Report {
         // Print header
         sb.append("| Name | Total Population |\r\n");
         sb.append("| --- | --- |\r\n");
-        sb.append("| " + populationData.getName() + " | "
-                + NumberFormat.getInstance().format(populationData.getPopulation()) + " |\r\n");
+        sb.append("| ").append(populationData.getName()).append(" | ").append(NumberFormat.getInstance().format(populationData.getPopulation())).append(" |\r\n");
 
         try {
             new File("./reports/").mkdir();

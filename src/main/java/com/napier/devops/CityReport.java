@@ -73,9 +73,9 @@ public class CityReport extends Report {
 
         // Print header
         if (isCapital) {
-            System.out.println(String.format("%-20s %-40s %-15s", "Name", "Country", "Population"));
+            System.out.printf("%-20s %-40s %-15s%n", "Name", "Country", "Population");
         } else {
-            System.out.println(String.format("%-20s %-40s %-25s %-15s", "Name", "Country", "District", "Population"));
+            System.out.printf("%-20s %-40s %-25s %-15s%n", "Name", "Country", "District", "Population");
         }
 
         // Loop over all countries in the list
@@ -141,13 +141,9 @@ public class CityReport extends Report {
             if (city == null) continue;
 
             if (isCapital) {
-                sb.append("| " + city.getName() + " | " +
-                        city.getCountry() + " | " +
-                        NumberFormat.getInstance().format(city.getPopulation()) + " |\r\n");
+                sb.append("| ").append(city.getName()).append(" | ").append(city.getCountry()).append(" | ").append(NumberFormat.getInstance().format(city.getPopulation())).append(" |\r\n");
             } else {
-                sb.append("| " + city.getName() + " | " +
-                        city.getCountry() + " | " + city.getDistrict() + " | " +
-                        NumberFormat.getInstance().format(city.getPopulation()) + " |\r\n");
+                sb.append("| ").append(city.getName()).append(" | ").append(city.getCountry()).append(" | ").append(city.getDistrict()).append(" | ").append(NumberFormat.getInstance().format(city.getPopulation())).append(" |\r\n");
             }
         }
 

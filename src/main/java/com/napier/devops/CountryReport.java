@@ -81,7 +81,7 @@ public class CountryReport extends Report {
         }
 
         // Print header
-        System.out.println(String.format("%-5s %-48s %-15s %-28s %20s %10s", "Code", "Name", "Continent", "Region", "Population", "Capital"));
+        System.out.printf("%-5s %-48s %-15s %-28s %20s %10s%n", "Code", "Name", "Continent", "Region", "Population", "Capital");
         // Loop over all countries in the list
         for (CountryReport country : countries) {
             if (country == null) {
@@ -119,10 +119,7 @@ public class CountryReport extends Report {
         // Loop over all countries in the list
         for (CountryReport country : countries) {
             if (country == null) continue;
-            sb.append("| " + country.getCode() + " | " +
-                    country.getName() + " | " + country.getContinent() + " | " +
-                    country.getRegion() + " | " + NumberFormat.getInstance().format(country.getPopulation()) + " | "
-                    + country.getCapital() + " |\r\n");
+            sb.append("| ").append(country.getCode()).append(" | ").append(country.getName()).append(" | ").append(country.getContinent()).append(" | ").append(country.getRegion()).append(" | ").append(NumberFormat.getInstance().format(country.getPopulation())).append(" | ").append(country.getCapital()).append(" |\r\n");
         }
         try {
             new File("./reports/").mkdir();
