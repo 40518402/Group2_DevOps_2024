@@ -44,7 +44,7 @@ body:
     id: operating-system
     attributes:
       label: Operating System
-      description: What operating system did you use?
+      description: Which operating system did you use?
       placeholder: ex. Windows 11, Ubuntu 24.04, macOS, etc...
     validations:
       required: true
