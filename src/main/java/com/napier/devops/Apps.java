@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class Apps {
     public static void main(String[] args) {
-        // Create new CityReport Object Instance
+        // Create new PopulationReport Object Instance
         PopulationReport popReport = new PopulationReport();
 
         // Connect to database
