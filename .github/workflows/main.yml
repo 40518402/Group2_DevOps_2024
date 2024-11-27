@@ -3,12 +3,6 @@ on:
   push:
     branches:
       - master
-      - release
-      - develop
-  pull_request:
-    branches:
-      - master
-      - release
       - develop
 jobs:
   UnitTests:
