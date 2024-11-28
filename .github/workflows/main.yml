@@ -12,6 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           submodules: recursive
       - name: Set up JDK 17
         uses: actions/setup-java@v2
@@ -33,6 +34,7 @@ jobs:
           directory: ./target/site/jacoco
           flags: Unit Tests # optional
           override_branch: true
+          commit_sha: ${{ github.sha }}
           verbose: true # optional (default = false)
 
   IntegrationTests:
@@ -42,6 +44,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           submodules: recursive
       - name: Set up JDK 17
         uses: actions/setup-java@v2
@@ -63,6 +66,7 @@ jobs:
           directory: ./target/site/jacoco
           flags: Integration Tests # optional
           override_branch: true
+          commit_sha: ${{ github.sha }}
           verbose: true # optional (default = false)
   build:
     name: Build and Start Using docker compose
